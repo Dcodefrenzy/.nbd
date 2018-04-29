@@ -1,0 +1,13 @@
+backups
+local
+spool
+cache
+lock
+tmp
+crash
+log
+www/phpmyadmin
+mail
+opt
+run
+lib

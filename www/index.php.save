@@ -1,0 +1,8 @@
+<?php
+
+echo "<h1>Welcome to the newly provisioned NGINX server on AW EC2</h1>";
+
+echo "RAM: 1gb Ram<br>STORAGE:30GB storage<br>PROCESOR: 2.5ghz Processor<br>PHP VERION 7.0<br>OTHER INSTALLED PACKAGES:mysql-server,phpmyadmin,gd-library";
+
+
+?>
