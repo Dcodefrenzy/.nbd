@@ -9,10 +9,7 @@ if($read['defaulted'] >= 3){
   $succ = preg_replace('/\s+/', '_', $success);
   header("Location: adminLogin?ssp=$succ");
 }
-
  ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,11 +19,6 @@ if($read['defaulted'] >= 3){
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="author" content="GrayGrids Team">
   <title>BoardSpeck</title>
-
-
-
-
-
   <script type="text/javascript" src="assets/ckeditor5-build-classic/ckeditor.js"></script>
   <link rel="shortcut icon" href="assets/img/favicon.png">
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
@@ -45,19 +37,16 @@ if($read['defaulted'] >= 3){
   <link href="assets/css/fileinput.css" rel="stylesheet">
 </head>
 <body>
-
   <div class="header">
     <nav class="navbar navbar-default main-navigation" role="navigation">
       <div class="container">
         <div class="navbar-header">
-
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-
           <a class="navbar-brand logo" href="#"><img src="assets/img/logo3.jpg" alt=""></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
@@ -78,7 +67,6 @@ if($read['defaulted'] >= 3){
         <?php $level = adminLevel($conn, $_SESSION['id']);
         if($level == NULL ){
           ?>
-
           <li> <a href="logout">Logout</a></li>
         <?php }elseif($level == 1){
           ?>
@@ -96,31 +84,19 @@ if($read['defaulted'] >= 3){
           <li><a href="manageEvent">Manage Events</a></li>
           <li> <a href="logout">Logout</a></li>
         <?php }elseif($level == 4){ ?>
-
           <li><a href="addCampusNews">Add Campus News</a></li>
-
           <li><a href="addCampusArticle">Add Campus Article</a></li>
-
           <li><a href="manageCampusNews">Manage Campus News</a></li>
-
           <li><a href="manageCampusArticles">Manage Campus Articles</a></li>
            <li> <a href="logout">Logout</a></li>
-
 <?php  }elseif($level == 5){ ?>
           <li><a href="addInsight">Add Insight</a></li>
   <li><a href="manageInsights">Manage Article</a></li>
        <li><a href="addArticle">Add Article</a></li>
           <li><a href="manageInsights">Manage Insights</a></li>
            <li> <a href="logout">Logout</a></li>
-
-
-
 <?php }elseif($level == 6){ ?>
-
-
  <li><a href="admin">Home</a></li>
-
-
           <li><a href="addNews">Add News</a></li>
           <li><a href="addCampusNews">Add Campus News</a></li>
           <li><a href="addEvent">Add Event</a></li>
@@ -128,19 +104,21 @@ if($read['defaulted'] >= 3){
           <li><a href="manageCampusNews">Manage Campus News</a></li>
           <li><a href="manageEvent">Manage Events</a></li>
            <li> <a href="logout">Logout</a></li>
-
+<?php }elseif($level == 7){ ?>
+ <li><a href="admin">Home</a></li>
+            <li><a href="addTraining">Add Training</a></li>
+          <li><a href="manageTrainings">Manage Trainings</a></li>
+           <li> <a href="logout">Logout</a></li>
         <?php }else{ ?>
           <li><a href="admin">Home</a></li>
           <li><a href="addArticle">Add Article</a></li>
           <li><a href="addNews">Add News</a></li>
           <li><a href="addCampusNews">Add Campus News</a></li>
           <li><a href="addInsight">Add Insight</a></li>
-
           <li><a href="addTraining">Add Training</a></li>
           <li><a href="addProgram">Add Program</a></li>
           <li><a href="addEvent">Add Event</a></li>
           <li><a href="addCampusArticle">Add Campus Article</a></li>
-
           <li><a href="managePrograms">Manage Programs</a></li>
           <li><a href="manageTrainings">Manage Trainings</a></li>
           <li><a href="manageNews">Manage News</a></li>

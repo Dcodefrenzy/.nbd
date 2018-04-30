@@ -24,6 +24,10 @@ $msg = NULL;
 if(isset($_GET['msg'])){
   $msg = $_GET['msg'];
 }
+$sh = NULL;
+if(isset($_GET['sh'])){
+  $sh = $_GET['sh'];
+}
 if(isset($_GET['c'])){
   $c = $_GET['c'];
 }
@@ -159,8 +163,14 @@ include APP_PATH."/demo_public_views/index.php";
   case "article?id=$id":
   include APP_PATH."/demo_public_views/post.php";
   break;
+  case "article?id=$id&sh=$sh":
+  include APP_PATH."/demo_public_views/post.php";
+  break;
 
   case "insight?id=$id":
+  include APP_PATH."/demo_public_views/insight_post.php";
+  break;
+  case "insight?id=$id&sh=$sh":
   include APP_PATH."/demo_public_views/insight_post.php";
   break;
 
@@ -260,6 +270,9 @@ include APP_PATH."/demo_public_views/index.php";
   case "news?id=$id":
   include APP_PATH."/demo_public_views/news_post.php";
   break;
+  case "news?id=$id&sh=$sh":
+  include APP_PATH."/demo_public_views/news_post.php";
+  break;
 
   case "news?c=$c":
   include APP_PATH."/demo_public_views/news_category.php";
@@ -275,7 +288,7 @@ include APP_PATH."/demo_public_views/index.php";
   include APP_PATH."/demo_public_views/campus_articles.php";
   break;
 
-  case "campus_articles?id=$id":
+  case "campus_articles?id=$id&sh=$sh":
   include APP_PATH."/demo_public_views/campus_articles_post.php";
   break;
 
@@ -296,7 +309,7 @@ include APP_PATH."/demo_public_views/index.php";
   include APP_PATH."/demo_public_views/campus_news.php";
   break;
 
-  case "campus_news?id=$id":
+  case "campus_news?id=$id&sh=$sh":
   include APP_PATH."/demo_public_views/campus_news_post.php";
   break;
 

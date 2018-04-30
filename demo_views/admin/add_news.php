@@ -14,40 +14,26 @@ $info = adminInfo($conn,$session);
 extract($info);
 $fname = ucwords($firstname);
 $lname = ucwords($lastname);
-
-
-
-
-
-
-
 $error= [];
-
 if(array_key_exists('submit', $_POST)){
   $ext = ["image/jpg", "image/JPG", "image/jpeg", "image/JPEG", "image/png", "image/PNG"];
   if(empty($_FILES['upload']['name'])){
     $error['upload'] = "Please choose file";
   }
-
   if(empty($_POST['title'])){
     $error['title']="Enter a Title";
   }
-
   if(empty($_POST['link'])){
     $error['link']="Enter a Link";
   }
-
-
   if(empty($_POST['body'])){
     $error['body']="Enter a body";
   }
   if(empty($_POST['visibility'])){
     $error['visibility']="Enter a Visibility";
   }
-
   if(empty($error)){
     $ver['a'] = compressImage($_FILES,'upload',50, 'uploads/' );
-
     $clean = array_map('trim', $_POST);
     addNews($conn, $clean,$ver,$hash_id);
   }
@@ -58,7 +44,6 @@ if(array_key_exists('submit', $_POST)){
 <div class="row">
   <?php if (isset($_GET['success'])){
   $msg = str_replace('_', ' ', $_GET['success']);
-
     echo '<div class="col-md-12">
   <div class="inner-box posting">
   <div class="alert alert-success alert-lg" role="alert">
@@ -91,7 +76,6 @@ echo $display ?> <input class="form-control input-md" name="link" placeholder="E
 </div>
 <div class="col-md-4 col-sm-4 col-xs-12 search-bar search-bar-nostyle">
 <div class="input-group-addon search-category-container">
-
 <label class="control-labell">News Category </label>  <?php $display = displayErrors($error, 'visibility');
 echo $display ?><br><select class="dropdown-product selectpicker" name="category" required>
 <option value="">
@@ -110,25 +94,20 @@ echo $display ?><br><select class="dropdown-product selectpicker" name="category
 echo $display ?>
 <textarea class="form-control"  id="editor" name="body" placeholder="Write your article here" rows="4"></textarea>
 </div>
-
   <br/>
   <div class="col-md-4 col-sm-4 col-xs-12 search-bar search-bar-nostyle">
 <div class="input-group-addon search-category-container">
-
 <label class="control-labell">VISIBILITY </label>  <?php $display = displayErrors($error, 'visibility');
   echo $display ?><br><select class="dropdown-product selectpicker" name="visibility">
 <option value="hide">
 --Admin Decision--
 </option>
 </select>
-
 </div>
 </div>
-
 <br/>
 <br/>
 <br/>
-
 <h2 class="title-2">Add Image here</h2>
 <div class="form-group">
 <label class="control-label">Add images</label>
@@ -142,14 +121,10 @@ echo $display ?>
 </div>
 </div>
 </div>
-
 </section>
-
 <a class="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
 <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
-
-
 <script>
   ClassicEditor
     .create( document.querySelector( '#editor' ) )
@@ -194,8 +169,6 @@ echo $display ?>
   </script>
 <script src="assets/js/fileinput.js">
   </script>
-
 </body>
-
 <!-- Mirrored from demo.graygrids.com/themes/classix-template/post-ads.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Nov 2017 11:40:57 GMT -->
 </html>

@@ -13,14 +13,11 @@ extract($info);
 $fname = ucwords($firstname);
 $lname = ucwords($lastname);
  ?>
-
-
 <div id="content">
 <div class="container">
 <div class="row">
   <?php if (isset($_GET['success'])){
   $msg = str_replace('_', ' ', $_GET['success']);
-
     echo '<div class="col-md-12">
   <div class="inner-box posting">
   <div class="alert alert-success alert-lg" role="alert">
@@ -30,11 +27,8 @@ $lname = ucwords($lastname);
   </div>
   </div>';
   } ?>
-
-
 <!-- <div class="col-sm-3 page-sideabr">
 <aside>
-
 <div class="inner-box">
 <div class="widget-title">
 <h4>Advertisement</h4>
@@ -44,14 +38,14 @@ $lname = ucwords($lastname);
 </aside>
 </div> -->
 <div class="col-sm-9 page-content" style="width:100%;overflow-x:scroll; ">
-
 <h2 class="title-2"><i class="fa fa-star-o"></i> Manage Content</h2>
 <br>
 <div class="table-responsive">
 <table class="table table-striped table-bordered add-manage-table">
   <tr>
     <th>Training Info</th>
-    <th>Body</th>
+    <th>Body(Click To Preview)</th>
+    <th>Image(Click To Edit)</th>
     <th>Created By</th>
     <th>Date Uploaded</th>
     <th>Visibility</th>
@@ -60,18 +54,12 @@ $lname = ucwords($lastname);
     <th>Set Visibility</th>
   </tr>
 <tbody>
-
-<?php 
-
+<?php
 if($level == "MASTER" || $level == 2 || $level == 3){
-getResource($conn,'grants',$_SESSION['id']); 
+getResource($conn,'grants',$_SESSION['id']);
 }else{
-      PgetResource($conn,'grants',$_SESSION['id']); 
-
+      PgetResource($conn,'grants',$_SESSION['id']);
 }
-
-
-
 ?>
 <!-- <td class="">
 <h4><a href="">Name</a></h4>
@@ -92,7 +80,6 @@ her
 <td class="add-img-td">
 her
 </td>
-
 <td class="ads-details-td">
   <a href="#"><button class="btn btn-common btn-sm" type="submit">Edit</button></a>
 </td>
@@ -109,7 +96,6 @@ her
    <button class="btn btn-basic btn-sm" type="submit">Hide</button>
   </a>
 </td> -->
-
 <!-- </tr>
 <tr>
 <td class="add-img-td">
@@ -182,18 +168,13 @@ her
   </a>
 </td>
 </tr> -->
-
 </tbody>
 </table>
 </div>
-
 </div>
 </div>
 </div>
 </div>
-
-
-
 <script type="text/javascript" src="assets/js/jquery-min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/js/material.min.js"></script>
@@ -211,6 +192,5 @@ her
 <script type="text/javascript" src="assets/js/jquery.themepunch.tools.min.js"></script>
 <script src="assets/js/bootstrap-select.min.js"></script>
 </body>
-
 <!-- Mirrored from demo.graygrids.com/themes/classix-template/account-saved-search.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Nov 2017 11:42:23 GMT -->
 </html>
