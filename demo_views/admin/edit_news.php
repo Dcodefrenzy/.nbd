@@ -14,34 +14,18 @@ $info = adminInfo($conn,$session);
 extract($info);
 $fname = ucwords($firstname);
 $lname = ucwords($lastname);
-
 $edit_info = getEditInfo($conn,$_GET['id'],'news');
-
-
-
-
-
-
-
-
 $error= [];
-
 if(array_key_exists('submit', $_POST)){
-
-
   if(empty($_POST['title'])){
     $error['title']="Enter a Title";
   }
-
   if(empty($_POST['link'])){
     $error['link']="Enter a Link";
   }
-
   if(empty($_POST['body'])){
     $error['body']="Enter a body";
   }
-
-
   if(empty($error)){
     $clean = array_map('trim', $_POST);
     editNews($conn, $clean,$_GET['id']);
@@ -53,7 +37,6 @@ if(array_key_exists('submit', $_POST)){
 <div class="row">
   <?php if (isset($_GET['success'])){
   $msg = str_replace('_', ' ', $_GET['success']);
-
     echo '<div class="col-md-12">
   <div class="inner-box posting">
   <div class="alert alert-success alert-lg" role="alert">
@@ -83,16 +66,13 @@ echo $display ?> <input class="form-control input-md" name="title" placeholder="
 <div class="form-group mb30">
 <label class="control-label">Link</label><?php $display = displayErrors($error, 'author');
 echo $display ?> <input class="form-control input-md" name="link" placeholder="Enter your news link" value="<?php echo $edit_info['link']      ?>"  type="text">
-
 <div class="form-group mb30">
 <label class="control-label" for="textarea">Body</label>
 <?php $display = displayErrors($error, 'body');
 echo $display ?>
 <textarea class="form-control"  id="editor" name="body" placeholder="Write your body of your news here" rows="4"><?php echo $edit_info['body']      ?></textarea>
 </div>
-
   <br/>
-
 <div class="form-group">
 <input type="submit" class="btn btn-common" name="submit" value="Edit">
 </form>
@@ -100,19 +80,16 @@ echo $display ?>
 </div>
 </div>
 </div>
-
 </section>
-
 <a class="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
 <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
-
-
 <script>
+var content = <?php echo "`".$edit_info['body']."`" ?>;
 ClassicEditor
     .create( document.querySelector( '#editor' ) )
     .then( editor => {
-      editor.setData( '<?php echo $edit_info['body']; ?>' )
+      editor.setData(content)
         console.log( editor );
     } )
     .catch( error => {
@@ -153,8 +130,6 @@ ClassicEditor
   </script>
 <script src="assets/js/fileinput.js">
   </script>
-
 </body>
-
 <!-- Mirrored from demo.graygrids.com/themes/classix-template/post-ads.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Nov 2017 11:40:57 GMT -->
 </html>
