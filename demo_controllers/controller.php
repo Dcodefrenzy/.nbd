@@ -674,10 +674,11 @@ function editContent($dbconn,$post,$gid,$tb){
   }
 }
 function editNews($dbconn,$post,$gid){
-  $stmt = $dbconn->prepare("UPDATE news SET headline=:tt, link=:au, body=:bd WHERE hash_id=:hid");
+  $stmt = $dbconn->prepare("UPDATE news SET headline=:tt,category=:ct, link=:au, body=:bd WHERE hash_id=:hid");
   $stmt->bindParam(":tt", $post['title']);
   $stmt->bindParam(":au", $post['link']);
   $stmt->bindParam(":bd", $post['body']);
+  $stmt->bindParam(":ct", $post['category']);
   $stmt->bindParam(":hid", $gid);
   $stmt->execute();
   if(isset($_SESSION['id'])){

@@ -11,7 +11,7 @@ ob_start();
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="description" content="Web-based information platform that seeks to project people’s positive thoughts, imaginations, knowledge, and experience towards the benefit and education of other people in the society. We are set to ensure this through the showcase of articles, insights of diverse categories and professions, and above all, through the dissemination of public information News to the general public." />
+	<meta name="description" content="Web-based information platform that seeks to project people’s positive thoughts and experience towards the benefit and education of other people in the society." />
 	<meta name="keywords" content="news, board, speck, boardspeck, board speck, training, trainings, insight, campus news, campus, world news, african news, african, africa, nigeria, lagos, mckodev, advertise, web office, web, office, tunse, tworkers, events, programs, event, program, swap, space, data room, factoring company,bail bonds, bail bondsman,bail bonds los angeles, intentions,Insurance, Loans, Mortgage, Attorney, Credit, Lawyer, Donate, Degree, Hosting, Claim, Conference Call, Trading, Software, Recovery, Transfer, Gas/Electicity, Classes, Rehab, Treatment, Cord Blood,">
 	<meta name="google-site-verification" content="teMJf1lggL_fqcE-yuhVryJavk92DTijHO9Zet5wePQ" />
 	<script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5ae4b7436a9348001198613c&product=inline-share-buttons' async='async'></script>
@@ -21,11 +21,11 @@ ob_start();
 		<meta property="og:image" content="https://boardspeck.com/images/fav.png" />
 		<meta property="og:image:width" content="450"/>
 		<meta property="og:image:height" content="298"/>
-		<meta property="og:description" content="Web-based information platform that seeks to project people’s positive thoughts, imaginations, intentions, knowledge, and experience towards the benefit and education of other people in the society. We are set to ensure this through the showcase of articles, insights of diverse categories and professions, and above all, through the dissemination of public information News to the general public." />';
+		<meta property="og:description" content="Web-based information platform that seeks to project people’s positive thoughts and experience towards the benefit and education of other people in the society." />';
 		echo '<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:site" content="@boardspeck">
 		<meta name="twitter:title" content="Boardspeck - Home">
-		<meta name="twitter:description" content="BoardSpeck is an emerging news and information platform, out to provide information to people of different, region, beliefs, cadres and status. ">
+		<meta name="twitter:description" content="Web-based information platform that seeks to project people’s positive thoughts and experience towards the benefit and education of other people in the society.">
 		<meta name="twitter:image" content="https://boardspeck.com/images/fav.png">
 		<meta name="twitter:image:width" content="280">
 		<meta name="twitter:image:height" content="150">';
@@ -49,6 +49,23 @@ ob_start();
 		$bd = previewBody($body, 22);
 		$rf = strip_tags($bd);
 		echo '<meta property="og:title" content="BoardSpeck - '.strtoupper($title).' by '.$author.'" />
+		<meta property="og:image" content="https://boardspeck.com/'.$image_1.'" />
+		<meta property="og:image:width" content="450"/>
+		<meta property="og:image:height" content="298"/>
+		<meta property="og:type" content="article" />
+		<meta property="og:description" content="'.$rf.'" />';
+		echo '<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@boardspeck">
+		<meta name="twitter:title" content="BoardSpeck - '.$title.'">
+		<meta name="twitter:description" content="'.$rf.'">
+		<meta name="twitter:image" content="https://boardspeck.com/'.$image_1.'">
+		<meta name="twitter:image:width" content="280">
+		<meta name="twitter:image:height" content="150">';
+	}elseif($page_name == "campus_articles"){
+		$bd = previewBody($body, 22);
+		$rf = strip_tags($bd);
+		$categ = getEntityCategory($conn,'campus','campus_name',$campus);
+		echo '<meta property="og:title" content="BoardSpeck - '.strtoupper($title).' by '.$author.'('.$categ['campus_name'].')" />
 		<meta property="og:image" content="https://boardspeck.com/'.$image_1.'" />
 		<meta property="og:image:width" content="450"/>
 		<meta property="og:image:height" content="298"/>
@@ -103,75 +120,22 @@ ob_start();
 });
 </script>
 <?php
-// 	if($page_name == "article_post"){
-// 		$info = getPostInfo($conn,'blog',$_GET['id']);
-// 		$bd = previewBody($info['body'], 22);
-// 		echo '<meta property="og:title" content="" />
-// 		    <meta property="og:image" content=http://philanthropycircuit.com/" />
-// 				<meta property="og:image:width" content="450"/>
-// 		<meta property="og:image:height" content="298"/>
-// 		<meta property="og:description" content="" />';
-//
-// echo '<meta name="twitter:card" content="summary_large_image">
-// <meta name="twitter:site" content="@mckodev">
-// <meta name="twitter:title" content="'.$info['title'].'">
-// <meta name="twitter:description" content="'.$bd.'">
-// <meta name="twitter:image" content="http://philanthropycircuit.com/'.$info['image_1'].'">
-// <meta name="twitter:image:width" content="280">
-// <meta name="twitter:image:height" content="150">';
-// 	}
-//
-// 	elseif($page_name == "insight_post"){
-// 		$info = getPostInfo($conn,'insight',$_GET['id']);
-// 		$bd = previewBody($info['body'], 22);
-// 		echo '<meta property="og:title" content="'.$info['title'].'" />
-// 		    <meta property="og:image" content=http://philanthropycircuit.com/'.$info['image_1'].'" />
-// 				<meta property="og:image:width" content="450"/>
-// 		<meta property="og:image:height" content="298"/>
-// 		<meta property="og:description" content="'.$bd.'" />';
-//
-// echo '<meta name="twitter:card" content="summary_large_image">
-// <meta name="twitter:site" content="@mckodev">
-// <meta name="twitter:title" content="'.$info['title'].'">
-// <meta name="twitter:description" content="'.$bd.'">
-// <meta name="twitter:image" content="http://philanthropycircuit.com/'.$info['image_1'].'">
-// <meta name="twitter:image:width" content="280">
-// <meta name="twitter:image:height" content="150">';
-// }else{
-//
-//
-//
-// 	echo '<meta property="og:title" content="'.$page_title.'" />
-// 			<meta property="og:image" content=http://philanthropycircuit.com/" />
-// 			<meta property="og:image:width" content="450"/>
-// 	<meta property="og:image:height" content="298"/>
-// 	<meta property="og:description" content="" />';
-//
-// echo '<meta name="twitter:card" content="summary_large_image">
-// <meta name="twitter:site" content="@mckodev">
-// <meta name="twitter:title" content="'.$page_title.'">
-// <meta name="twitter:description" content="">
-// <meta name="twitter:image" content="http://philanthropycircuit.com/">
-// <meta name="twitter:image:width" content="280">
-// <meta name="twitter:image:height" content="150">';
-// }
+
 ?>
 <!-- Favicon -->
 <link rel="shortcut icon" href="images/fav.png" type="image/x-icon" />
 <!-- Stylesheets -->
-<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700+Open+Sans:400,700" />
-<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons" />
-<link type="text/css" rel="stylesheet" href="css/reset.min.css" />
-<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" />
+<!-- <link type="text/css" rel="stylesheet" href="https//fonts.googleapis.com/css?family=Montserrat:400,700+Open+Sans:400,700" /> -->
+<!-- <link type="text/css" rel="stylesheet" href="https//fonts.googleapis.com/icon?family=Material+Icons" /> -->
+<!-- <link type="text/css" rel="stylesheet" href="css/reset.min.css" /> -->
+<!-- <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" /> -->
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
 <link type="text/css" rel="stylesheet" href="css/animate.css" />
 <link type="text/css" rel="stylesheet" href="css/main-stylesheet.min.css" />
-<link type="text/css" rel="stylesheet" href="css/ot-lightbox.min.css" />
-<link type="text/css" rel="stylesheet" href="css/shortcodes.min.css" />
+<!-- <link type="text/css" rel="stylesheet" href="css/ot-lightbox.min.css" /> -->
+<!-- <link type="text/css" rel="stylesheet" href="css/shortcodes.min.css" /> -->
 <link type="text/css" rel="stylesheet" href="css/responsive.min.css" />
-<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5a9fde7b9c502900133c1aba&product=inline-share-buttons"></script>
-<!-- END head -->
 </head>
 <!-- BEGIN body -->
 <!-- <body> -->

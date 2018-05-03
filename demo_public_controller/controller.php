@@ -78,12 +78,12 @@ function getPreviewInsightsPost($dbconn){
     <div class="item-content">
     <h2><a href="news?id='.$hash_id.'">'.$headline.'</a></h2>
     <span class="item-meta">
-    <span class="item-meta-item"><i class="material-icons">access_time</i>'.$NDate.'</span>
+    <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$NDate.'</span>
     </span>
-    <p>'.$bd.'</p>
+    <p>'.$bd. '<a href="news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
     </div>
     </div>';
-    if (($i++ % 2) == 1 ){
+    if (($i++ % 4) == 1 ){
       echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       <ins class="adsbygoogle"
       style="display:block"
@@ -107,7 +107,7 @@ function getPreviewInsightsPost($dbconn){
       $NDate = decodeDate($date_created);
       echo '<div class="item">
       <a href="insight?id='.$hash_id.'" class="main-slider-owl-title" style="font-size:18pt; text-shadow: 6px 6px 10px #000000;">'.$title.'</a>
-      <a href="insight?id='.$hash_id.'" class="main-slider-owl-calendar"><strong><i class="material-icons">access_time</i>'.$NDate.'</strong></a><div style="width:100%; max-height:80vh; overflow:hidden"><img src="'.$image_1.'" height="42" alt="" /></div>
+      <a href="insight?id='.$hash_id.'" class="main-slider-owl-calendar"><strong><i class="fa fa-clock-o"></i>'.$NDate.'</strong></a><div style="width:100%; max-height:80vh; overflow:hidden"><img src="'.$image_1.'" height="42" alt="" /></div>
       </div>';
     }
   }
@@ -149,7 +149,7 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h4><a href="articles?id='.$hash_id.'">'.$title.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -174,7 +174,7 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h4><a href="articles?id='.$hash_id.'">'.$title.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -199,7 +199,7 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h4><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -226,7 +226,7 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -253,7 +253,7 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -280,7 +280,7 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -305,7 +305,7 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h4><a href="insight?id='.$hash_id.'">'.$title.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -326,7 +326,7 @@ function getPreviewInsightsPost($dbconn){
       <div style="margin-left:10px" class="item-content">
       <h4><a href="'.$link.'">'.$title.'</a></h4>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       </div>
       </div>';
@@ -341,6 +341,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":sh", $vis);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -353,12 +354,24 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="insight?id='.$hash_id.'">'.$title.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
-      <a href="insight?id='.$hash_id.'" class="item-meta-item"><i class="material-icons">chat_bubble_outline</i><fb:comments-count href="http://news.mckodev.com.ng/insight?id='.$hash_id.'"></fb:comments-count></a>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
+
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a  href="insight?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getEntityCategory($dbconn,$tb,$nm,$gid){
@@ -374,6 +387,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":sh", $vis);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -386,11 +400,23 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="news?id='.$hash_id.'">'.$headline.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getPaginatedCampusNews($dbconn,$fs,$pp){
@@ -399,6 +425,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":sh", $vis);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -411,11 +438,23 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="campus_news?id='.$hash_id.'"  class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getCatPaginatedInsight($dbconn,$fs,$pp,$cat){
@@ -424,6 +463,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":sh", $vis);
     $stmt->bindParam(":cat", $cat);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -436,11 +476,23 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="insight?id='.$hash_id.'">'.$title.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="insight?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getCatPaginatedNews($dbconn,$fs,$pp,$cat){
@@ -449,6 +501,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":sh", $vis);
     $stmt->bindParam(":cat", $cat);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -461,11 +514,23 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="news?id='.$hash_id.'">'.$headline.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getCatPaginatedCampusNews($dbconn,$fs,$pp,$cat){
@@ -474,6 +539,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":sh", $vis);
     $stmt->bindParam(":cat", $cat);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -486,11 +552,23 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="campus_news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getPaginatedArticle($dbconn,$fs,$pp){
@@ -498,6 +576,7 @@ function getPreviewInsightsPost($dbconn){
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -510,12 +589,24 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="article?id='.$hash_id.'">'.$title.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
-      <a href="insight?id='.$hash_id.'" class="item-meta-item"><i class="material-icons">chat_bubble_outline</i><fb:comments-count href="http://news.mckodev.com.ng/article?id='.$hash_id.'"></fb:comments-count></a>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
+
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="article?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getPaginatedCampusArticle($dbconn,$fs,$pp){
@@ -523,6 +614,7 @@ function getPreviewInsightsPost($dbconn){
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -535,12 +627,24 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="campus_articles?id='.$hash_id.'">'.$title.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
-      <a href="campus_articles?id='.$hash_id.'" class="item-meta-item"><i class="material-icons">chat_bubble_outline</i><fb:comments-count href="http://news.mckodev.com.ng/article?id='.$hash_id.'"></fb:comments-count></a>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
+
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="campus_articles?id='.$hash_id.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getCatPaginatedCampusArticle($dbconn,$fs,$pp,$cat){
@@ -550,6 +654,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":cat", $cat);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -562,12 +667,24 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="campus_articles?id='.$hash_id.'">'.$title.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
-      <a href="campus_articles?id='.$hash_id.'" class="item-meta-item"><i class="material-icons">chat_bubble_outline</i><fb:comments-count href="http://news.mckodev.com.ng/article?id='.$hash_id.'"></fb:comments-count></a>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
+
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="campus_articles?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getPaginatedAfrica($dbconn,$fs,$pp,$ct){
@@ -575,6 +692,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->bindParam(":cat", $ct);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -587,11 +705,23 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content">
       <h2><a href="'.$link.'">'.$headline.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       <p>'.$body.'</p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getPaginatedReport($dbconn,$fs,$pp){
@@ -599,6 +729,7 @@ function getPreviewInsightsPost($dbconn){
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -607,12 +738,24 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content" style="margin-left:0px">
       <h2><a href="'.$link.'">'.$title.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
       <p>'.$body.'</p>
       <h2><a href="'.$link.'">Download</a></h2>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getPaginatedEvent($dbconn,$fs,$pp){
@@ -620,6 +763,7 @@ function getPreviewInsightsPost($dbconn){
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($start_date);
@@ -629,13 +773,25 @@ function getPreviewInsightsPost($dbconn){
       <div class="item-content" style="margin-left:0px">
       <h2><a href="event?id='.$hash_id.'">'.$name.'</a></h2>
       <span class="item-meta">
-      <span class="item-meta-item">Start Date:<i class="material-icons">access_time</i>'.$SDate.'</span>
-      <span class="item-meta-item">End Date:<i class="material-icons">access_time</i>'.$SDate.'</span>
-      <span class="item-meta-item">Venue:<i class="material-icons">location_on</i>'.$venue.'</span>
+      <span class="item-meta-item">Start Date:<i class="fa fa-clock-o"></i>'.$SDate.'</span>
+      <span class="item-meta-item">End Date:<i class="fa fa-clock-o"></i>'.$SDate.'</span>
+      <span class="item-meta-item">Venue:<i class="fa-map-marker"></i>'.$venue.'</span>
       </span>
-      <p>'.$bd.'..</p>
+      <p>'.$bd.'<a href="event?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function getPaginatedGrant($dbconn,$fs,$pp){
@@ -645,6 +801,7 @@ function getPreviewInsightsPost($dbconn){
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -655,12 +812,24 @@ function getPreviewInsightsPost($dbconn){
       <span class="item-meta">
       </span>
       <span class="item-meta">
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'</p>
+      <p>'.$bd.'<a href="trainingDetails?id='.$hash_id.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>
       ';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
     }
   }
   function fetchCampusLink($dbconn,$categ,$tb){
@@ -703,7 +872,7 @@ function getPreviewInsightsPost($dbconn){
         <div class="item-content" style="margin-left:0px">
         <h2><a href="'.$link.'">'.$title.'</a></h2>
         <span class="item-meta">
-        <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+        <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
         </span>
         <p>'.$body.'</p>
         </div>
@@ -736,6 +905,7 @@ function getPreviewInsightsPost($dbconn){
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
+      $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($date_created);
@@ -746,7 +916,7 @@ function getPreviewInsightsPost($dbconn){
       <span class="item-meta">
       <a href="'.$link.'" class="item-meta-item meta-button">Visit Page<i class="fa fa-caret-right"></i></a>
       </span>
-      <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       <p>'.$body.'</p>
       </div>
       <span class="item"><div class="sharethis-inline-share-buttons" data-description="'.$bd.'" data-url="https://boardspeck.com/program" data-title="Would you love to attend? - '.$title.'"></div></span>
@@ -840,7 +1010,7 @@ function getInsightHeader($dbconn){
     <div class="item-content">
     <h4><a href="insight?id='.$hash_id.'">'.$title.'</a></h4>
     <span class="item-meta">
-    <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+    <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
     </div>
     </div>';
@@ -865,7 +1035,7 @@ function getCampusNewsHeader($dbconn){
     <div class="item-content">
     <h4><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h4>
     <span class="item-meta">
-    <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+    <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
     </div>
     </div>';
@@ -886,7 +1056,7 @@ function getReportHeader2($dbconn){
     <div style="margin-left:10px" class="item-content">
     <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
     <span class="item-meta">
-    <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+    <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
     </div>
     </div>';
@@ -904,7 +1074,7 @@ function getInsightHeader2($dbconn){
     <div style="margin-left:10px" class="item-content">
     <h4><a href="insight?id='.$hash_id.'">'.$title.'</a></h4>
     <span class="item-meta">
-    <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+    <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
     </div>
     </div>';
@@ -927,7 +1097,7 @@ function getNewsHeader($dbconn,$rg){
     <div class="item-content">
     <h4><a href="new?id='.$hash_id.'">'.$headline.'</a></h4>
     <span class="item-meta">
-    <span class="item-meta-item"><i class="material-icons">access_time</i>'.$SDate.'</span>
+    <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
     </div>
     </div>';

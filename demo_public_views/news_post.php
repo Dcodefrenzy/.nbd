@@ -59,7 +59,7 @@ include("include/header.php");
                      <img src="<?php echo $image_1 ?>" alt="<?php echo $title ?>" style="min-width:100%" />
                    </div>
                    <div class="composs-main-article-meta">
-                     <span class="item"><i class="material-icons">access_time</i><?php echo $SDate ?></span>
+                     <span class="item"><i class="fa fa-clock-o"></i><?php echo $SDate ?></span>
                     <span class="item"><i class="fa fa-user"></i><?php echo $link ?></span>
                      <span class="item"><i class="fa fa-folder"></i><?php $categ = getEntityCategory($conn,'news_category','news_category',$category); echo $categ['news_category'];?></span>
                      <!-- <span class="item"><script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
