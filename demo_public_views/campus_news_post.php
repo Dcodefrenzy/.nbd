@@ -39,7 +39,7 @@ include("include/header.php");
                   <img src="<?php echo $image_1 ?>" alt="<?php echo $title ?>" style="min-width:100%" />
                 </div>
                 <div class="composs-main-article-meta">
-                  <span class="item"><i class="material-icons">access_time</i><?php echo $SDate ?></span>
+                  <span class="item"><i class="fa fa-clock-o"></i><?php echo $SDate ?></span>
                   <span class="item"><i class="fa fa-folder"></i><?php $categ = getEntityCategory($conn,'campus','campus_name',$campus); echo $categ['campus_name'];?></span>
                   <span class="item"><div class="sharethis-inline-share-buttons" ></div></span>
                 </div>
@@ -48,7 +48,7 @@ include("include/header.php");
                 <?php echo $body ?>
               </div>
             </div>
-            <div class="fb-comments" data-mobile="true" data-href="http://news.mckodev.com.ng/news?id=<?php echo $_GET['id'] ?>" data-width="700px" data-numposts="10"></div>
+            <div class="fb-comments" data-mobile="true" data-href="http://boardspeck.com/news?id=<?php echo $_GET['id'] ?>" data-width="700px" data-numposts="10"></div>
           </div>
           <!-- END .composs-panel -->
         </div>

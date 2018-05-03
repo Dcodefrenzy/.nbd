@@ -3,65 +3,43 @@ ob_start();
 $page_title = "Grants - BoardSpeck";
 $page_name = "grant";
 include("include/header.php");
-
 ?>
 <!-- BEGIN .content -->
 <div class="content">
-
   <!-- BEGIN .wrapper -->
   <div class="wrapper">
-
     <div class="content-wrapper">
-
       <!-- BEGIN .composs-main-content -->
       <div class="composs-main-content composs-main-content-s-1">
-
         <!-- BEGIN .composs-panel -->
         <div class="composs-panel">
-
           <div class="composs-panel-title">
             <strong>Search Result for "<?php echo str_replace('-',' ',$_GET['keyword']) ?>"</strong>
           </div>
-
           <div class="composs-panel-inner">
-
             <div class="composs-blog-list lets-do-1">
-
-
 <?php
 $vis = "Show";
 $page = 1;
 $perPage = 10;
-
-
 if(isset($_GET['p'])){
   $page = $_GET['p'];
 }
-
 $offset  = ($page - 1 ) * $perPage;
-
 // $statement = $conn->prepare("SELECT * FROM grants WHERE visibility = :sh");
 //
 // $statement->bindParam(":sh", $vis);
 // $statement->execute();
 $keyword = str_replace('-',' ',$_GET['keyword']);
 $count =  getSearchResultCount($conn,$_GET['rd'],$keyword,$offset,$perPage);
-
 $totalPages = ceil($count/$perPage);
-
-
-
 getSearchResult($conn,$_GET['rd'],$keyword,$offset,$perPage); ?>
-
 </div>
-
 </div>
-
 <div class="composs-panel-pager">
   <?php if($count > 0){ ?>
   <p><?php echo $page ?> of <?php echo $totalPages ?>pages</p>
 <?php } ?>
-
   <?php if(isset($_GET['p'])){
     if($_GET['p'] >= 2){
       $prev = $_GET['p'] - 1;
@@ -69,14 +47,11 @@ getSearchResult($conn,$_GET['rd'],$keyword,$offset,$perPage); ?>
     }elseif($_GET['p'] == 2){
       echo '<a class="prev page-numbers" href="grants"><i class="fa fa-angle-double-left"></i>Previous</a>';
     }
-
   }
   $finalPage = 1;
   if(isset($_GET['p'])){
     $finalPage = $_GET['p'];
   }
-
-
   if($totalPages > 1 && $totalPages !=$finalPage ){
     if(isset($_GET['p'])){
       $next = $_GET['p'] + 1;
@@ -119,39 +94,28 @@ getSearchResult($conn,$_GET['rd'],$keyword,$offset,$perPage); ?>
       </div>
       <!-- END .widget -->
     </div>
-
-
     <div class="widget">
       <div class="widget-content">
         <a href="#" target="_blank"><img src="images/o2.jpg" alt="" /></a>
       </div>
       <!-- END .widget -->
     </div>
-
     <!-- BEGIN .widget -->
     <div class="widget">
       <h3>UPCOMING EVENTS</h3>
       <div class="widget-content ot-w-comments-list">
-
         <?php getPreviewEvent($conn) ?>
-
       </div>
       <!-- END .widget -->
     </div>
     <!-- BEGIN .widget -->
-
-
     <!-- END #sidebar -->
   </aside>
-
 </div>
-
 <!-- END .wrapper -->
 </div>
-
 <!-- BEGIN .content -->
 </div>
-
 <?php
 include("include/footer.php");
 ?>

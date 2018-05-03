@@ -291,6 +291,9 @@ include APP_PATH."/demo_public_views/index.php";
   case "campus_articles?id=$id&sh=$sh":
   include APP_PATH."/demo_public_views/campus_articles_post.php";
   break;
+  case "campus_articles?id=$id":
+  include APP_PATH."/demo_public_views/campus_articles_post.php";
+  break;
 
   case "campus_articles?c=$c":
   include APP_PATH."/demo_public_views/campus_articles_category.php";

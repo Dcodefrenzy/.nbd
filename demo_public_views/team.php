@@ -2,22 +2,16 @@
 $page_title = "Team - BoardSpeck";
 $page_name = "team";
 include("include/header.php");
-
  ?>
-
  <div class="composs-panel">
-
    <div class="composs-panel-title composs-panel-title-tabbed">
      <strong class="active">Latest reviews</strong>
      <strong>Gadget reviews</strong>
      <strong>Fashion reviews</strong>
    </div>
-
    <div class="composs-panel-inner">
      <div class="composs-panel-tab active">
-
        <div class="composs-article-list lets-do-3 lets-do-slider">
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -32,7 +26,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -47,7 +40,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -62,7 +54,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -77,7 +68,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -92,7 +82,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -107,13 +96,10 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
        </div>
      </div>
      <div class="composs-panel-tab">
-
        <div class="composs-article-list lets-do-4 lets-do-slider">
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -128,7 +114,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -143,7 +128,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -158,7 +142,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -173,7 +156,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -188,7 +170,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -203,7 +184,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -218,7 +198,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -233,13 +212,10 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
        </div>
      </div>
      <div class="composs-panel-tab">
-
        <div class="composs-article-list lets-do-3">
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -254,7 +230,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -269,7 +244,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -284,7 +258,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -299,7 +272,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -314,7 +286,6 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
          <div class="item">
            <div class="item-header">
              <a href="#" class="img-read-later-button">Read later</a>
@@ -329,14 +300,11 @@ include("include/header.php");
              <span class="item-stars"><span class="stars-inner" data-ot-css="width: 80%;"></span></span>
            </div>
          </div>
-
        </div>
      </div>
    </div>
-
  <!-- END .composs-panel -->
  </div>
-
   										<div class="composs-comments">
   											<div class="composs-secondary-title">
   												<a href="#writeacomment" class="right composs-button">Leave a response</a>
@@ -350,10 +318,6 @@ include("include/header.php");
   												</div>
   											</div>
   										</div>
-
-
-
 <?php
 include("include/footer.php");
-
  ?>

@@ -6,7 +6,7 @@ lock
 tmp
 crash
 log
-www/phpmyadmin
+www/@secure/phpmyadmin
 mail
 opt
 run
