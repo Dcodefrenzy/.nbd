@@ -78,6 +78,23 @@ ob_start();
 		<meta name="twitter:image" content="https://boardspeck.com/'.$image_1.'">
 		<meta name="twitter:image:width" content="280">
 		<meta name="twitter:image:height" content="150">';
+	}elseif($page_name == "exploits"){
+		$bd = previewBody($body, 22);
+		$rf = strip_tags($bd);
+		$categ = getEntityCategory($conn,'campus','campus_name',$campus);
+		echo '<meta property="og:title" content="BoardSpeck - '.strtoupper($title).'('.$categ['campus_name'].')" />
+		<meta property="og:image" content="https://boardspeck.com/'.$image_1.'" />
+		<meta property="og:image:width" content="450"/>
+		<meta property="og:image:height" content="298"/>
+		<meta property="og:type" content="article" />
+		<meta property="og:description" content="'.$rf.'" />';
+		echo '<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@boardspeck">
+		<meta name="twitter:title" content="BoardSpeck - '.$title.'">
+		<meta name="twitter:description" content="'.$rf.'">
+		<meta name="twitter:image" content="https://boardspeck.com/'.$image_1.'">
+		<meta name="twitter:image:width" content="280">
+		<meta name="twitter:image:height" content="150">';
 	}elseif($page_name == "event_show"){
 		$bd = previewBody($about, 22);
 		$rf = strip_tags($bd);
@@ -128,7 +145,7 @@ ob_start();
 <!-- <link type="text/css" rel="stylesheet" href="https//fonts.googleapis.com/css?family=Montserrat:400,700+Open+Sans:400,700" /> -->
 <!-- <link type="text/css" rel="stylesheet" href="https//fonts.googleapis.com/icon?family=Material+Icons" /> -->
 <!-- <link type="text/css" rel="stylesheet" href="css/reset.min.css" /> -->
-<!-- <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" /> -->
+<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" />
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
 <link type="text/css" rel="stylesheet" href="css/animate.css" />
@@ -279,6 +296,11 @@ ob_start();
 			<li><a href="#">Articles</a>
 				<ul class="sub-menu">
 					<?php fetchCampusLink($conn,'campus_articles','article') ?>
+				</ul>
+			</li>
+			<li><a href="#">Exploits</a>
+				<ul class="sub-menu">
+					<?php fetchCampusLink($conn,'exploits','exploits') ?>
 				</ul>
 			</li>
 		</ul>

@@ -64,6 +64,9 @@ $edit_info2 = getEditInfo2($conn,$_GET['id'],$_GET['t']);
   if($_GET['t'] == "campus_article"){
   echo '<a href="manageCampusArticles"> <button class="btn btn-common" type="submit">Back</button></a>';
 }
+  if($_GET['t'] == "exploits"){
+  echo '<a href="manageExploits"> <button class="btn btn-common" type="submit">Back</button></a>';
+}
 
    ?>
    <br>
