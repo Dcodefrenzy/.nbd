@@ -572,7 +572,9 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPaginatedArticle($dbconn,$fs,$pp){
-    $stmt = $dbconn->prepare("SELECT * FROM blog ORDER BY id DESC LIMIT $fs,$pp");
+    $sh = "show";
+    $stmt = $dbconn->prepare("SELECT * FROM blog WHERE visibility=:sh ORDER BY id DESC LIMIT $fs,$pp");
+    $stmt->bindParam(":sh", $sh);
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
@@ -647,6 +649,46 @@ function getPreviewInsightsPost($dbconn){
         }
     }
   }
+  function getPaginatedExploits($dbconn,$fs,$pp){
+    $sh = "show";
+    $stmt = $dbconn->prepare("SELECT * FROM exploits WHERE visibility=:sh ORDER BY id DESC LIMIT $fs,$pp");
+    // $stmt->bindParam(":ff", $fs);
+    $stmt->bindParam(":sh", $sh);
+    // $stmt->bindParam(":bk", $pp);
+    $stmt->execute();
+      $i = 0;
+    while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+      extract($row);
+      $SDate = decodeDate($date_created);
+      $bd = previewBody($body,33);
+      echo '<div class="item">
+      <div class="item-header">
+      <a href="exploits?id='.$hash_id.'" class="img-read-later-button">Read</a>
+      <a href="exploits?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      </div>
+      <div class="item-content">
+      <h2><a href="exploits?id='.$hash_id.'">'.$title.'</a></h2>
+      <span class="item-meta">
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
+
+      </span>
+      <p>'.$bd.'<a href="exploits?id='.$hash_id.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      </div>
+      </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
+    }
+  }
   function getCatPaginatedCampusArticle($dbconn,$fs,$pp,$cat){
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM campus_article WHERE visibility=:sh AND campus=:cat ORDER BY id DESC LIMIT $fs,$pp");
@@ -671,6 +713,46 @@ function getPreviewInsightsPost($dbconn){
 
       </span>
       <p>'.$bd.'<a href="campus_articles?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      </div>
+      </div>';
+      if (($i++ % 4) == 1 ){
+        echo '<div class="item"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-format="fluid"
+        data-ad-layout-key="-dv-21+4j+6-3s"
+        data-ad-client="ca-pub-8913707638008127"
+        data-ad-slot="9334540834"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+          </script></div>';
+        }
+    }
+  }
+  function getCatPaginatedExploits($dbconn,$fs,$pp,$cat){
+    $vis = "show";
+    $stmt = $dbconn->prepare("SELECT * FROM exploits WHERE visibility=:sh AND campus=:cat ORDER BY id DESC LIMIT $fs,$pp");
+    $stmt->bindParam(":sh", $vis);
+    $stmt->bindParam(":cat", $cat);
+    // $stmt->bindParam(":bk", $pp);
+    $stmt->execute();
+      $i = 0;
+    while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+      extract($row);
+      $SDate = decodeDate($date_created);
+      $bd = previewBody($body,33);
+      echo '<div class="item">
+      <div class="item-header">
+      <a href="exploits?id='.$hash_id.'" class="img-read-later-button">Read</a>
+      <a href="exploits?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      </div>
+      <div class="item-content">
+      <h2><a href="exploits?id='.$hash_id.'">'.$title.'</a></h2>
+      <span class="item-meta">
+      <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
+
+      </span>
+      <p>'.$bd.'<a href="exploits?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){

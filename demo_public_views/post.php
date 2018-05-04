@@ -39,7 +39,6 @@ include("include/header.php");
                    </div>
                    <div class="composs-main-article-meta">
                      <span class="item"><i class="fa fa-clock-o"></i><?php echo $SDate ?></span>
-                     <a href="#comments" class="item"><i class="material-icons">chat_bubble_outline</i><fb:comments-count href="http://news.mckodev.com.ng/article?id=<?php echo $_GET['id']  ?>"></fb:comments-count> Comments</a>
                      <span class="item"><i class="fa fa-user"></i><?php echo $author ?></span>
                      <!-- <span class="item"><script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
 <script type="IN/Share" data-url="http://philanthropycircuit/article?id=<?php// echo $_GET['id'] ?>"></script></span>

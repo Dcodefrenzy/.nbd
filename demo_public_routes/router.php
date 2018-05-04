@@ -301,6 +301,27 @@ include APP_PATH."/demo_public_views/index.php";
   case "campus_articles?c=$c&p=$p":
   include APP_PATH."/demo_public_views/campus_articles_category.php";
   break;
+
+  case "exploits":
+  include APP_PATH."/demo_public_views/exploits.php";
+  break;
+  case "exploits?p=$p":
+  include APP_PATH."/demo_public_views/exploits.php";
+  break;
+
+  case "exploits?id=$id&sh=$sh":
+  include APP_PATH."/demo_public_views/exploit_post.php";
+  break;
+  case "exploits?id=$id":
+  include APP_PATH."/demo_public_views/exploit_post.php";
+  break;
+
+  case "exploits?c=$c":
+  include APP_PATH."/demo_public_views/exploits_category.php";
+  break;
+  case "exploits?c=$c&p=$p":
+  include APP_PATH."/demo_public_views/exploits_category.php";
+  break;
   // case "news?cp=$cp":
   // include APP_PATH."/demo_public_views/news_category.php";
   // break;

@@ -34,4 +34,7 @@ header("location:manageCampusNews");
 if($tb == "campus_article"){
 header("location:manageCampusArticles");
 }
+if($tb == "exploits"){
+header("location:manageExploits");
+}
  ?>

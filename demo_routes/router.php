@@ -77,6 +77,9 @@ switch ($uri[1]) {
   case "addCampusArticle":
   include APP_PATH."/demo_views/admin/add_campus_blog.php";
   break;
+  case "addExploit":
+  include APP_PATH."/demo_views/admin/add_exploit.php";
+  break;
 
   case "addInsight":
   include APP_PATH."/demo_views/admin/add_insights.php";
@@ -88,7 +91,7 @@ switch ($uri[1]) {
   case "addTraining":
   include APP_PATH."/demo_views/admin/add_grants.php";
   break;
-  
+
     case "deleteCampusNews?id=$id":
   include APP_PATH."/demo_views/admin/delete_campus_news.php";
   break;
@@ -118,6 +121,9 @@ switch ($uri[1]) {
   break;
   case "addCampusArticle?success=$success":
   include APP_PATH."/demo_views/admin/add_campus_blog.php";
+  break;
+  case "addExploit?success=$success":
+  include APP_PATH."/demo_views/admin/add_exploit.php";
   break;
 
   case "addInsight?success=$success":
@@ -214,6 +220,9 @@ switch ($uri[1]) {
   case "manageCampusArticles":
   include APP_PATH."/demo_views/admin/view_campus_articles.php";
   break;
+  case "manageExploits":
+  include APP_PATH."/demo_views/admin/view_exploits.php";
+  break;
 
   case "manageInsights":
   include APP_PATH."/demo_views/admin/view_insights.php";
@@ -244,6 +253,9 @@ switch ($uri[1]) {
   break;
   case "editCampusArticle?id=$id":
   include APP_PATH."/demo_views/admin/edit_campus_article.php";
+  break;
+  case "editExploit?id=$id":
+  include APP_PATH."/demo_views/admin/edit_exploit.php";
   break;
 
   case "editAbout?id=$id":
@@ -372,6 +384,9 @@ switch ($uri[1]) {
   case "deleteCampusArticle?id=$id":
   include APP_PATH."/demo_views/admin/delete_campus_article.php";
   break;
+  case "deleteExploit?id=$id":
+  include APP_PATH."/demo_views/admin/delete_exploit.php";
+  break;
   case "deleteEvent?id=$id":
   include APP_PATH."/demo_views/admin/delete_event.php";
   break;
@@ -392,6 +407,9 @@ switch ($uri[1]) {
   break;
   case "manageCampusArticles?success=$success":
   include APP_PATH."/demo_views/admin/view_campus_articles.php";
+  break;
+  case "manageExploits?success=$success":
+  include APP_PATH."/demo_views/admin/view_exploits.php";
   break;
 
   case "manageAbout":

@@ -195,6 +195,28 @@ function addCampusArticle($dbconn,$post,$destn, $sess){
   $succ = preg_replace('/\s+/', '_', $success);
   header("Location:/manageCampusArticles?success=$succ");
 }
+function addExploit($dbconn,$post,$destn, $sess){
+  $rnd = rand(0000000000,9999999999);
+  $split = explode(" ",$post['title']);
+  $id = $rnd.cleans($split['0']);
+  $hash_id = 'article'.str_shuffle($id);
+  $stmt = $dbconn->prepare("INSERT INTO exploits VALUES(NULL, :tt,:au,:cm,:vis,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
+  $data = [
+    ':tt' => $post['title'],
+    ':au' => $post['author'],
+    ':cm' => $post['campus'],
+    ':vis' => $post['visibility'],
+    ':bd' => $post['body'],
+    ':img1' => $destn['a'],
+    ':sess' => $sess,
+    ':hsh' => $hash_id
+  ];
+  $stmt->execute($data);
+  logs($dbconn, 'added', $post['title'],'article',$sess);
+  $success = "Campus Article Post Uploaded";
+  $succ = preg_replace('/\s+/', '_', $success);
+  header("Location:/manageExploits?success=$succ");
+}
 function addInsight($dbconn,$post,$destn, $sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
@@ -590,6 +612,21 @@ function editCampusArticle($dbconn,$post,$gid){
   $succ = preg_replace('/\s+/', '_', $success);
   header("Location:/manageCampusArticles?success=$succ");
 }
+function editExploit($dbconn,$post,$gid){
+  $stmt = $dbconn->prepare("UPDATE exploits SET title=:tt, organization=:au, body=:bd WHERE hash_id=:hid");
+  $stmt->bindParam(":tt", $post['title']);
+  $stmt->bindParam(":au", $post['author']);
+  $stmt->bindParam(":bd", $post['body']);
+  $stmt->bindParam(":hid", $gid);
+  $stmt->execute();
+  if(isset($_SESSION['id'])){
+    $sess = $_SESSION['id'];
+  }
+  logs($dbconn, 'edited', $post['title'],'Campus article',$sess);
+  $success = "edited Successfully";
+  $succ = preg_replace('/\s+/', '_', $success);
+  header("Location:/manageExploits?success=$succ");
+}
 function editEvent($dbconn,$post,$gid){
   $stmt = $dbconn->prepare("UPDATE event SET name=:tt, venue=:au, about=:bd, start_date=:sd, end_date=:ed WHERE hash_id=:hid");
   $stmt->bindParam(":tt", $post['name']);
@@ -767,6 +804,9 @@ function editImage($dbconn,$destn,$del,$get,$tb){
   if($tb == "grants"){
     header("location:manageTrainings");
   }
+  if($tb == "exploits"){
+    header("location:manageExploits");
+  }
 }
 function previewBody($string, $count){
   $original_string = $string;
@@ -898,6 +938,127 @@ function getCampusArticleView($dbconn,$get){
     }
   }
 }
+function getExploitsView($dbconn,$get){
+  $stmt = $dbconn->prepare("SELECT * FROM exploits ORDER BY id DESC");
+  $stmt->execute();
+  while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+    extract($row);
+    $bd = previewBody($body, 20);
+    $level =  adminLevel($dbconn,$get);
+    if($level == 3 || $level == "MASTER"){
+      echo '<tr><td class="ads-details-td">
+      <h4><a href="">'.$title.'</a></h4>
+      <p> <strong> Organization </strong>:
+      '.$organization.'</p>
+      <p> <strong> Campus </strong>:
+      '.$campus.'</p>
+      </td>
+      <td class="ads-details-td">
+      <a href="viewBody?id='.$hash_id.'&t=exploits"><p>'.$bd.'</p></a>
+      </td>
+      <td class="add-img-td">
+      <a href="editImage?id='.$hash_id.'&t=exploits">
+      <img class="img-responsive" src="'.$image_1.'">
+      </a>
+      </td>
+      <td class="add-img-td">
+      '.$created_by.'
+      </td>
+      <td class="add-img-td">
+      '.$date_created.'
+      </td>
+      <td class="add-img-td">
+      '.$visibility.'
+      </td>
+      <td class="ads-details-td">
+      <a href="editExploit?id='.$hash_id.'"><button class="btn btn-common btn-sm" type="submit">Edit</button></a>
+      </td>
+      <td class="price-td">
+      <a href="deleteExploit?id='.$hash_id.'">
+      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+      </a>
+      </td>
+      <td class="price-td">
+      <a href="show?id='.$hash_id.'&t=exploits">
+      <button class="btn btn-success btn-sm" type="submit">Show</button>
+      </a>
+      <a href="hide?id='.$hash_id.'&t=exploits">
+      <button class="btn btn-basic btn-sm" type="submit">Hide</button>
+      </a>
+      </td></tr>';
+    }
+    if($level == 2 || $level == 4 || $level == 5 || $level == 6){
+      echo '<tr><td class="ads-details-td">
+      <h4><a href="">'.$title.'</a></h4>
+      <p> <strong>Organization </strong>:
+      '.$organization.'</p>
+      <p> <strong> Campus </strong>:
+      '.$campus.'</p>
+      </td>
+      <td class="ads-details-td">
+      <a href="viewBody?id='.$hash_id.'&t=exploits"><p>'.$bd.'</p></a>
+      </td>
+      <td class="add-img-td">
+      <a href="editImage?id='.$hash_id.'&t=exploits">
+      <img class="img-responsive" src="'.$image_1.'">
+      </a>
+      </td>
+      <td class="add-img-td">
+      '.$created_by.'
+      </td>
+      <td class="add-img-td">
+      '.$date_created.'
+      </td>
+      <td class="add-img-td">
+      '.$visibility.'
+      </td>
+      <td class="ads-details-td">
+      <a href="editExploit?id='.$hash_id.'"><button class="btn btn-common btn-sm" type="submit">Edit</button></a>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td></tr>';
+    }
+    if($level == 1){
+      echo '<tr><td class="ads-details-td">
+      <h4><a href="">'.$title.'</a></h4>
+      <p> <strong> Organization </strong>:
+      '.$organization.'</p>
+      <p> <strong> Campus </strong>:
+      '.$campus.'</p>
+      </td>
+      <td class="ads-details-td">
+      <a href="viewBody?id='.$hash_id.'&t=exploits"><p>'.$bd.'</p></a>
+      </td>
+      <td class="add-img-td">
+      <a href="#">
+      <img class="img-responsive" src="'.$image_1.'">
+      </a>
+      </td>
+      <td class="add-img-td">
+      '.$created_by.'
+      </td>
+      <td class="add-img-td">
+      '.$date_created.'
+      </td>
+      <td class="add-img-td">
+      '.$visibility.'
+      </td>
+      <td class="ads-details-td">
+      <p>You cannnot perform this action</p>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td></tr>';
+    }
+  }
+}
 function PgetCampusArticleView($dbconn,$get){
   $stmt = $dbconn->prepare("SELECT * FROM campus_article WHERE created_by=:cb ORDER BY id DESC");
   $stmt->bindParam(":cb",$get);
@@ -993,6 +1154,128 @@ function PgetCampusArticleView($dbconn,$get){
       </td>
       <td class="ads-details-td">
       <a href="viewBody?id='.$hash_id.'&t=campus_article"><p>'.$bd.'</p></a>
+      </td>
+      <td class="add-img-td">
+      <a href="#">
+      <img class="img-responsive" src="'.$image_1.'">
+      </a>
+      </td>
+      <td class="add-img-td">
+      '.$created_by.'
+      </td>
+      <td class="add-img-td">
+      '.$date_created.'
+      </td>
+      <td class="add-img-td">
+      '.$visibility.'
+      </td>
+      <td class="ads-details-td">
+      <p>You cannnot perform this action</p>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td></tr>';
+    }
+  }
+}
+function PgetExploitsView($dbconn,$get){
+  $stmt = $dbconn->prepare("SELECT * FROM exploits WHERE created_by=:cb ORDER BY id DESC");
+  $stmt->bindParam(":cb",$get);
+  $stmt->execute();
+  while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+    extract($row);
+    $bd = previewBody($body, 20);
+    $level =  adminLevel($dbconn,$get);
+    if($level == 3 || $level == "MASTER"){
+      echo '<tr><td class="ads-details-td">
+      <h4><a href="">'.$title.'</a></h4>
+      <p> <strong> Organization </strong>:
+      '.$organization.'</p>
+      <p> <strong> Campus </strong>:
+      '.$campus.'</p>
+      </td>
+      <td class="ads-details-td">
+      <a href="viewBody?id='.$hash_id.'&t=exploits"><p>'.$bd.'</p></a>
+      </td>
+      <td class="add-img-td">
+      <a href="editImage?id='.$hash_id.'&t=exploits">
+      <img class="img-responsive" src="'.$image_1.'">
+      </a>
+      </td>
+      <td class="add-img-td">
+      '.$created_by.'
+      </td>
+      <td class="add-img-td">
+      '.$date_created.'
+      </td>
+      <td class="add-img-td">
+      '.$visibility.'
+      </td>
+      <td class="ads-details-td">
+      <a href="editExploit?id='.$hash_id.'"><button class="btn btn-common btn-sm" type="submit">Edit</button></a>
+      </td>
+      <td class="price-td">
+      <a href="deleteExploit?id='.$hash_id.'">
+      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+      </a>
+      </td>
+      <td class="price-td">
+      <a href="show?id='.$hash_id.'&t=exploits">
+      <button class="btn btn-success btn-sm" type="submit">Show</button>
+      </a>
+      <a href="hide?id='.$hash_id.'&t=exploits">
+      <button class="btn btn-basic btn-sm" type="submit">Hide</button>
+      </a>
+      </td></tr>';
+    }
+    if($level == 2 || $level == 4 || $level == 5 || $level == 6){
+      echo '<tr><td class="ads-details-td">
+      <h4><a href="">'.$title.'</a></h4>
+      <p> <strong> Organization </strong>:
+      '.$organization.'</p>
+      <p> <strong> Campus </strong>:
+      '.$campus.'</p>
+      </td>
+      <td class="ads-details-td">
+      <a href="viewBody?id='.$hash_id.'&t=exploits"><p>'.$bd.'</p></a>
+      </td>
+      <td class="add-img-td">
+      <a href="editImage?id='.$hash_id.'&t=exploits">
+      <img class="img-responsive" src="'.$image_1.'">
+      </a>
+      </td>
+      <td class="add-img-td">
+      '.$created_by.'
+      </td>
+      <td class="add-img-td">
+      '.$date_created.'
+      </td>
+      <td class="add-img-td">
+      '.$visibility.'
+      </td>
+      <td class="ads-details-td">
+      <a href="editExploit?id='.$hash_id.'"><button class="btn btn-common btn-sm" type="submit">Edit</button></a>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td>
+      <td class="price-td">
+      <p>You cannnot perform this action</p>
+      </td></tr>';
+    }
+    if($level == 1){
+      echo '<tr><td class="ads-details-td">
+      <h4><a href="">'.$title.'</a></h4>
+      <p> <strong>Organization </strong>:
+      '.$organization.'</p>
+      <p> <strong> Campus </strong>:
+      '.$campus.'</p>
+      </td>
+      <td class="ads-details-td">
+      <a href="viewBody?id='.$hash_id.'&t=exploits"><p>'.$bd.'</p></a>
       </td>
       <td class="add-img-td">
       <a href="#">
@@ -2659,6 +2942,16 @@ function deleteCampusArticle($dbconn,$img,$hid){
   $success = "Deleted";
   $succ = preg_replace('/\s+/', '_', $success);
   header("Location:/manageCampusArticles?success=$succ");
+}
+function deleteExploit($dbconn,$img,$hid){
+  $myFile = $img;
+  $stmt = $dbconn->prepare("DELETE FROM exploits WHERE hash_id=:hid");
+  $stmt->bindParam(":hid", $hid);
+  $stmt->execute();
+  unlink($myFile) or die("Unable to delete");
+  $success = "Deleted";
+  $succ = preg_replace('/\s+/', '_', $success);
+  header("Location:/manageExploits?success=$succ");
 }
 function deleteInsight($dbconn,$img,$hid){
   $myFile = $img;

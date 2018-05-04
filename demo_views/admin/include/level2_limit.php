@@ -1,6 +1,6 @@
 <?php
 $check = adminFullInfo($conn,$_SESSION['id']);
-if($check['level'] == 2 || $check['level'] == 5 || $check['level'] == 6 || $check['level'] == 7 ){
+if($check['level'] == 2 || $check['level'] == 5 || $check['level'] == 6 || $check['level'] == 7 || $check['level'] == 8 ){
   $name = $check['firstname']." ".$lastname;
   $urii = explode("/", $_SERVER['REQUEST_URI']);
   $stmt = $conn->prepare("INSERT INTO defaulter VALUES(NULL,:id,:pg,NOW(),NOW())");

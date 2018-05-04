@@ -2,6 +2,19 @@
 $page_title = "Contact - BoardSpeck";
 $page_name = "contact";
 include("include/header.php");
+if(array_key_exists("submit", $_POST)){
+  $email = $_POST['email'];
+  $name = $_POST['name'];
+  $message = $_POST['comment'];
+
+  $to = "boardspeck@gmail.com";
+  $subject = "Message From $name to Boardspeck Office";
+  $txt = $message. "<hr>the email to this message is $email";
+  $headers = "From: $email" . "\r\n" .
+  "CC: banjimayowa@gmail.com";
+
+  mail($to,$subject,$txt,$headers);
+}
  ?>
 
  <!-- BEGIN .content -->
@@ -19,7 +32,7 @@ include("include/header.php");
  							<div class="composs-panel">
 
  								<div class="composs-panel-title">
- 									<strong>Come visit us</strong>
+ 									<strong>Contact</strong>
  								</div>
 
  								<div class="composs-panel-inner">
@@ -30,15 +43,13 @@ include("include/header.php");
 
  												<div class="column4">
  													<ul>
- 														<li><i class="material-icons">phone</i> <a href="callto:08168785591">+2348168785591</a> </li>
- 														<!-- <li><i class="material-icons">location_on</i>299, Ikorodu Road, Olatunji House. Idi-Iroko, Maryland. Lagos, Ilupeju 100001, Lagos</li> -->
- 														<li><a href="mailto:info@boardspeck.com"><i class="material-icons">email</i>info@boardspeck.com</a></li>
+ 														<li><i class="fa fa-phone"></i> <a href="callto:08168785591">+2348168785591</a> </li>
+ 														<li><i class="fa fa-whatsapp"></i>
+ 														  <a href="intent://send/+2348168785591#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end">Send Whatsapp</a></li>
+ 														<li><a href="mailto:boardspeck@gmail.com"><i class="fa fa-envelope"></i>boardspeck@gmail.com</a></li>
  													</ul>
  												</div>
- 												<div class="column4">
- 													<i class="material-icons large-icon">location_city</i>
- 													<!-- <i class="material-icons large-icon">location_on</i> -->
- 												</div>
+
  											</div>
  										</div>
  										<!-- <div class="map-block-content google-maps">
@@ -62,7 +73,7 @@ include("include/header.php");
  									<div class="comment-form">
  										<div id="respond" class="comment-respond">
 
- 											<form action="#" class="comment-form">
+ 											<form action="#" method="post" class="comment-form">
  												<div class="alert-message ot-shortcode-alert-message alert-green">
  													<strong>Success! This a success message</strong>
  												</div>
@@ -75,20 +86,20 @@ include("include/header.php");
  												<div class="contact-form-content">
  													<p class="contact-form-user">
  														<label class="label-input">
- 															<span>Nickname<i class="required">*</i></span>
- 															<input type="text" placeholder="Nickname" name="nickname" value="">
+ 															<span>Name<i class="required">*</i></span>
+ 															<input type="text" placeholder="Nickname" name="name" value="" required>
  														</label>
  													</p>
  													<p class="contact-form-email">
  														<label class="label-input">
  															<span>E-mail<i class="required">*</i></span>
- 															<input type="email" placeholder="E-mail" name="email" value="">
+ 															<input type="email" placeholder="E-mail" name="email" value="" required>
  														</label>
  													</p>
  													<p class="contact-form-comment">
  														<label class="label-input">
  															<span>Message text<i class="required">*</i></span>
- 															<textarea name="comment" placeholder="Message text"></textarea>
+ 															<textarea name="comment" placeholder="Message text" required></textarea>
  														</label>
  													</p>
  													<p class="form-submit">
