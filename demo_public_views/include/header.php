@@ -115,7 +115,7 @@ ob_start();
 		<meta property="og:description" content="'.$rf.'" />';
 		echo '<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:site" content="@boardspeck">
-		<meta name="twitter:title" content="content="Have you heard of this training? - '.$title.'">
+		<meta name="twitter:title" content="Have you heard of this training? - '.$title.'">
 		<meta name="twitter:image" content="https://boardspeck.com/'.$image_1.'">
 		<meta name="twitter:description" content="'.$rf.'">';
 	}else{
