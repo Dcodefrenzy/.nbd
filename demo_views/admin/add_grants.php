@@ -85,14 +85,9 @@ if(array_key_exists('submit', $_POST)){
                   <label class="control-labell">VISIBILITY </label>  <?php $display = displayErrors($error, 'visibility');
                   echo $display ?><br><select class="dropdown-product selectpicker" required name="visibility">
                     <option value="">
-                      --Select--
+                      --Admin Decision--
                     </option>
-                    <option value="show">
-                      Show
-                    </option>
-                    <option value="hide">
-                      Hide
-                    </option>
+
                   </select>
                 </div>
               </div>

@@ -156,7 +156,7 @@ function addArticle($dbconn,$post,$destn, $sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'article'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'article');
   $stmt = $dbconn->prepare("INSERT INTO blog VALUES(NULL, :tt,:au,:vis,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -177,7 +177,7 @@ function addCampusArticle($dbconn,$post,$destn, $sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'article'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'article');
   $stmt = $dbconn->prepare("INSERT INTO campus_article VALUES(NULL, :tt,:au,:cm,:vis,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -199,7 +199,7 @@ function addExploit($dbconn,$post,$destn, $sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'article'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'article');
   $stmt = $dbconn->prepare("INSERT INTO exploits VALUES(NULL, :tt,:au,:cm,:vis,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -213,7 +213,7 @@ function addExploit($dbconn,$post,$destn, $sess){
   ];
   $stmt->execute($data);
   logs($dbconn, 'added', $post['title'],'article',$sess);
-  $success = "Campus Article Post Uploaded";
+  $success = "Exploit Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
   header("Location:/manageExploits?success=$succ");
 }
@@ -221,7 +221,7 @@ function addInsight($dbconn,$post,$destn, $sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'insight'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'insight');
   $stmt = $dbconn->prepare("INSERT INTO insight VALUES(NULL,:tt,:at,:au,:vis,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -243,7 +243,7 @@ function addNews($dbconn,$post,$destn, $sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'news'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'news');
   $stmt = $dbconn->prepare("INSERT INTO news VALUES(NULL, :tt,:lnk,:vis,:cat,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -265,7 +265,7 @@ function addCampusNews($dbconn,$post,$destn, $sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'news'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'news');
   $stmt = $dbconn->prepare("INSERT INTO campus_news VALUES(NULL, :tt,:lnk,:vis,:cat,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -287,7 +287,7 @@ function addReport($dbconn,$post,$sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'report'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'report');
   $stmt = $dbconn->prepare("INSERT INTO report VALUES(NULL, :tt,:lnk,:vis,:bd,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -318,7 +318,7 @@ function addEvent($dbconn,$post,$sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'event'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'event');
   $stmt = $dbconn->prepare("INSERT INTO event VALUES(NULL,:nm,:vn,:ab,:sd,:ed,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':nm' => $post['name'],
@@ -339,7 +339,7 @@ function addGrant($dbconn,$post,$destn,$sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'report'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'report');
   $stmt = $dbconn->prepare("INSERT INTO grants VALUES(NULL, :tt,:lnk,:vis,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -360,7 +360,7 @@ function addTraining($dbconn,$post,$sess){
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
-  $hash_id = 'training'.str_shuffle($id);
+  $hash_id = str_shuffle($id.'training');
   $stmt = $dbconn->prepare("INSERT INTO training VALUES(NULL, :tt,:lnk,:vis,:bd,:sess,NOW(),NOW(),:hsh)");
   $data = [
     ':tt' => $post['title'],
@@ -445,7 +445,7 @@ function addCampus($dbconn,$post, $sess){
   $split = strtoupper($_POST['package_name']);
   $id = $rnd.$split;
   $hash_id = str_shuffle($id);
-  $stmt = $dbconn->prepare("INSERT INTO campus VALUES(NULL,:pn,:hid,NULL,NULL,NOW(),NOW(),:sess)");
+  $stmt = $dbconn->prepare("INSERT INTO campus VALUES(NULL,:pn,:hid,NULL,NULL,NULL,NOW(),NOW(),:sess)");
   $data = [
     ':pn' => $post['package_name'],
     ':hid' => $hash_id,
@@ -1182,6 +1182,7 @@ function PgetCampusArticleView($dbconn,$get){
   }
 }
 function PgetExploitsView($dbconn,$get){
+
   $stmt = $dbconn->prepare("SELECT * FROM exploits WHERE created_by=:cb ORDER BY id DESC");
   $stmt->bindParam(":cb",$get);
   $stmt->execute();
@@ -1190,6 +1191,7 @@ function PgetExploitsView($dbconn,$get){
     $bd = previewBody($body, 20);
     $level =  adminLevel($dbconn,$get);
     if($level == 3 || $level == "MASTER"){
+
       echo '<tr><td class="ads-details-td">
       <h4><a href="">'.$title.'</a></h4>
       <p> <strong> Organization </strong>:
@@ -1231,7 +1233,7 @@ function PgetExploitsView($dbconn,$get){
       </a>
       </td></tr>';
     }
-    if($level == 2 || $level == 4 || $level == 5 || $level == 6){
+    if($level == 2 || $level == 4 || $level == 5 || $level == 6 || $level == 8){
       echo '<tr><td class="ads-details-td">
       <h4><a href="">'.$title.'</a></h4>
       <p> <strong> Organization </strong>:
