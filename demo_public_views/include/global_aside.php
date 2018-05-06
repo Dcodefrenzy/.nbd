@@ -5,7 +5,7 @@
   <div class="widget">
     <h3>Latest Articles</h3>
     <div class="widget-content ot-w-article-list">
-      <?php getGlobalNewsPreview($conn) ?>
+      <?php getArticlePreview($conn) ?>
 </div>
 <!-- END .widget -->
 </div>

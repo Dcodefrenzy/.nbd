@@ -56,6 +56,31 @@ include("include/header.php");
             <!-- BEGIN .composs-panel -->
             <!-- END .composs-main-content -->
           </div>
+          <div class="header-content-o">
+            <!--<a href="#" target="_blank"><img src="images/o1.jpg" alt="" /></a>-->
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- box ads -->
+            <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-8913707638008127"
+            data-ad-slot="9737468736"
+            data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>	<div class="header-content-o">
+              <!--<a href="#" target="_blank"><img src="images/o1.jpg" alt="" /></a>-->
+              <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+              <!-- box ads -->
+              <ins class="adsbygoogle"
+              style="display:block"
+              data-ad-client="ca-pub-8913707638008127"
+              data-ad-slot="9737468736"
+              data-ad-format="auto"></ins>
+              <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+            </div>
         </div>
         <!-- END .wrapper -->
       </div>

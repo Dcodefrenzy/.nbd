@@ -4,10 +4,10 @@ ob_start();
 <!DOCTYPE HTML>
 <!-- BEGIN html -->
 <html lang = "en">
-<!-- BEGIN head -->
 <head>
 	<title><?php echo $page_title ?></title>
 	<!-- Meta Tags -->
+	<!-- <link rel="manifest" href="manifest.json"> -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -38,9 +38,10 @@ ob_start();
 		<meta property="og:image:width" content="450"/>
 		<meta property="og:image:height" content="298"/>
 		<meta property="og:description" content="'.$rf.'" />';
+
 		echo '<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:site" content="@boardspeck">
-		<meta name="twitter:title" content="content="BoardSpeck - '.$headline.'">
+		<meta name="twitter:title" content="BoardSpeck - '.$headline.'">
 		<meta name="twitter:description" content="'.$rf.'">
 		<meta name="twitter:image" content="https://boardspeck.com/'.$image_1.'">
 		<meta name="twitter:image:width" content="280">
@@ -82,7 +83,7 @@ ob_start();
 		$bd = previewBody($body, 22);
 		$rf = strip_tags($bd);
 		$categ = getEntityCategory($conn,'campus','campus_name',$campus);
-		echo '<meta property="og:title" content="BoardSpeck - '.strtoupper($title).'('.$categ['campus_name'].')" />
+		echo '<meta property="og:title" content="BoardSpeck - '.strtoupper($title).'('.$categ['campus_name'].' Exploits)" />
 		<meta property="og:image" content="https://boardspeck.com/'.$image_1.'" />
 		<meta property="og:image:width" content="450"/>
 		<meta property="og:image:height" content="298"/>
@@ -104,7 +105,7 @@ ob_start();
 		<meta property="og:image" content="https://boardspeck.com/images/fav.png" />';
 		echo '<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:site" content="@boardspeck">
-		<meta name="twitter:title" content="content="Would you love to attend? - '.$name.' ('.$SDate.')">
+		<meta name="twitter:title" content="Would you love to attend? - '.$name.' ('.$SDate.')">
 		<meta name="twitter:description" content="'.$rf.'">';
 	}elseif($page_name == "view_training"){
 		$bd = previewBody($body, 22);
@@ -135,9 +136,15 @@ ob_start();
 	google_ad_client: "ca-pub-8913707638008127",
 	enable_page_level_ads: true
 });
+
+
+
+
+
+
+
 </script>
 <?php
-
 ?>
 <!-- Favicon -->
 <link rel="shortcut icon" href="images/fav.png" type="image/x-icon" />
@@ -188,128 +195,144 @@ ob_start();
 								<li><a href="index">Homepage</a>
 								</li>
 								<li><a href="about">About</a></li>
-								<li><a href="#"><span>Features</span></a>
+								<li><a href="articles">Articles</a></li>
+								<li><a href="insights"><span>Insights</span></a>
 									<ul class="sub-menu">
-										<!-- <li><a href="#">Witness Report</a></li> -->
-										<li><a href="articles">Articles</a></li>
-										<li><a href="insight">Insignts</a>
-											<ul class="sub-menu">
-												<?php fetchFeatureLink($conn,'insights') ?>
-											</ul></li>
-										</ul>
-									</li>
-									<li><a href="#"><span>Latest</span></a>
-										<ul class="sub-menu ot-mega-menu">
-											<li class="lets-do-4">
-												<div class="widget-split item">
-													<!-- BEGIN .widget -->
-													<div class="widget">
-														<div class="widget-split item">
-															<div class="widget">
-																<h3>Latest Insight</h3>
-																<div class="widget-content ot-w-article-list">
-																	<?php getInsightHeader($conn) ?>
-																</div>
+										<?php fetchFeatureLink($conn,'insights') ?>
+									</ul>
+								</li>
+								<li><a href="#"><span>Latest</span></a>
+									<ul class="sub-menu ot-mega-menu">
+										<li class="lets-do-4">
+											<div class="widget-split item">
+												<!-- BEGIN .widget -->
+												<div class="widget">
+													<div class="widget-split item">
+														<div class="widget">
+															<h3>Latest Insight</h3>
+															<div class="widget-content ot-w-article-list">
+																<?php getInsightHeader($conn) ?>
 															</div>
 														</div>
-														<!-- END .widget -->
 													</div>
-												</div>
-												<div class="widget-split item">
-													<div class="widget">
-														<h3>Latest Campus News</h3>
-														<div class="widget-content ot-w-article-list">
-															<?php getCampusNewsHeader($conn) ?>
-														</div>
-													</div>
-												</div>
-												<div class="widget-split item">
-													<div class="widget">
-														<h3>Latest News</h3>
-														<div class="widget-content ot-w-article-list">
-															<?php 	getNewsHeader($conn, 'gia5235e9940N73ir') ?>
-															<!-- <div class="item">
-															<div class="item-header">
-															<a href="#" class="img-read-later-button rm-btn-small">Read later</a>
-															<a href="#"><img src="images/photos/image-18.jpg" alt="" /></a>
-														</div>
-														<div class="item-content">
-														<h4><a href="#">Meet DC's Legends of Tomorrow</a></h4>
-														<span class="item-meta">
-														<span class="item-meta-item"><i class="material-icons">access_time</i>January 12, 2015</span>
-													</span>
+													<!-- END .widget -->
 												</div>
 											</div>
-											<div class="item">
-											<div class="item-header">
-											<a href="#" class="img-read-later-button rm-btn-small">Read later</a>
-											<a href="#"><img src="images/photos/image-19.jpg" alt="" /></a>
+											<div class="widget-split item">
+												<div class="widget">
+													<h3>Latest Campus News</h3>
+													<div class="widget-content ot-w-article-list">
+														<?php getCampusNewsHeader($conn) ?>
+													</div>
+												</div>
+											</div>
+											<div class="widget-split item">
+												<div class="widget">
+													<h3>Latest News</h3>
+													<div class="widget-content ot-w-article-list">
+														<?php 	getNewsHeader($conn, 'gia5235e9940N73ir') ?>
+														<!-- <div class="item">
+														<div class="item-header">
+														<a href="#" class="img-read-later-button rm-btn-small">Read later</a>
+														<a href="#"><img src="images/photos/image-18.jpg" alt="" /></a>
+													</div>
+													<div class="item-content">
+													<h4><a href="#">Meet DC's Legends of Tomorrow</a></h4>
+													<span class="item-meta">
+													<span class="item-meta-item"><i class="material-icons">access_time</i>January 12, 2015</span>
+												</span>
+											</div>
 										</div>
-										<div class="item-content">
-										<h4><a href="#">YOU DECIDE: The Best Movie of 2015!</a></h4>
-										<span class="item-meta">
-										<span class="item-meta-item"><i class="material-icons">access_time</i>January 12, 2015</span>
-									</span>
-								</div>
-							</div> -->
-						</div>
+										<div class="item">
+										<div class="item-header">
+										<a href="#" class="img-read-later-button rm-btn-small">Read later</a>
+										<a href="#"><img src="images/photos/image-19.jpg" alt="" /></a>
+									</div>
+									<div class="item-content">
+									<h4><a href="#">YOU DECIDE: The Best Movie of 2015!</a></h4>
+									<span class="item-meta">
+									<span class="item-meta-item"><i class="material-icons">access_time</i>January 12, 2015</span>
+								</span>
+							</div>
+						</div> -->
 					</div>
 				</div>
-				<div class="widget-split item">
-					<div class="widget">
-						<div class="widget-split item">
-							<div class="widget">
-								<h3>Latest Global News</h3>
-								<div class="widget-content ot-w-article-list">
-									<?php 	getNewsHeader($conn, '8a8ol2G34157b07l') ?>
-								</div>
+			</div>
+			<div class="widget-split item">
+				<div class="widget">
+					<div class="widget-split item">
+						<div class="widget">
+							<h3>Latest Global News</h3>
+							<div class="widget-content ot-w-article-list">
+								<?php 	getNewsHeader($conn, '8a8ol2G34157b07l') ?>
 							</div>
 						</div>
 					</div>
 				</div>
-			</li>
-		</ul>
-	</li>
-	<li><a href="#"><span>News</span></a>
-		<ul class="sub-menu">
-			<?php fetchNewsLink($conn,'news') ?>
-			<!-- <li><a href="global">Global</a></li>
-			<li><a href="africa">Africa</a></li>
-			<li><a href="global">Nigeria</a></li> -->
-		</ul>
-	</li>
-	<li><a href="#"><span>Opportunities</span></a>
-		<ul class="sub-menu">
-			<li><a href="trainings">Trainings</a></li>
-			<li><a href="view_event">Programs/Seminars</a></li>
-		</ul>
-	</li>
-	<!-- <li><a href="team">Our Team</a></li> -->
-	<!-- <li><a href="archive">Report Event</a></li> -->
-	<li><a href="campus"><span>Campus</span></a>
-		<ul class="sub-menu">
-			<li><a href="#">News</a>
-				<ul class="sub-menu">
-					<?php fetchCampusLink($conn,'campus_news','news') ?>
-				</ul>
-			</li>
-			<li><a href="#">Articles</a>
-				<ul class="sub-menu">
-					<?php fetchCampusLink($conn,'campus_articles','article') ?>
-				</ul>
-			</li>
-			<li><a href="#">Exploits</a>
-				<ul class="sub-menu">
-					<?php fetchCampusLink($conn,'exploits','exploits') ?>
-				</ul>
-			</li>
-		</ul>
-	</li>
-	<li><a href="contact">Contact us</a></li>
+			</div>
+		</li>
+	</ul>
+</li>
+<li><a href="#"><span>News</span></a>
+	<ul class="sub-menu">
+		<?php fetchNewsLink($conn,'news') ?>
+		<!-- <li><a href="global">Global</a></li>
+		<li><a href="africa">Africa</a></li>
+		<li><a href="global">Nigeria</a></li> -->
+	</ul>
+</li>
+<li><a href="#"><span>Opportunities</span></a>
+	<ul class="sub-menu">
+		<li><a href="trainings">Trainings</a></li>
+		<li><a href="view_event">Programs/Seminars</a></li>
+	</ul>
+</li>
+<!-- <li><a href="team">Our Team</a></li> -->
+<!-- <li><a href="archive">Report Event</a></li> -->
+<li><a href="#"><span>Campus</span></a>
+	<ul class="sub-menu">
+		<li><a href="#">News</a>
+			<ul class="sub-menu">
+				<?php fetchCampusLink($conn,'campus_news','news') ?>
+			</ul>
+		</li>
+		<li><a href="#">Articles</a>
+			<ul class="sub-menu">
+				<?php fetchCampusLink($conn,'campus_articles','article') ?>
+			</ul>
+		</li>
+		<li><a href="#">Exploits</a>
+			<ul class="sub-menu">
+				<?php fetchCampusLink($conn,'exploits','exploits') ?>
+			</ul>
+		</li>
+	</ul>
+</li>
+<li><a href="contact">Contact us</a></li>
 </ul>
 </nav>
+
 </div>
+
 <!-- END .wrapper -->
 </div>
 <!-- END .header -->
+<?php if($page_name == "news_post" || $page_name == "view_training" || $page_name == "view_event"){ ?>
+	<div class="wrapper">
+	<div class="header-content-o">
+		<!--<a href="#" target="_blank"><img src="images/o1.jpg" alt="" /></a>-->
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- box ads -->
+		<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-8913707638008127"
+		data-ad-slot="9737468736"
+		data-ad-format="auto"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+</div>
+<?php } ?>
+
 </div>

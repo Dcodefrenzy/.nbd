@@ -112,7 +112,7 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPreviewEvent($dbconn){
-    $stmt = $dbconn->prepare("SELECT * FROM event ORDER BY start_date ASC LIMIT 4" );
+    $stmt = $dbconn->prepare("SELECT * FROM event ORDER BY start_date ASC LIMIT 5" );
     $stmt->bindParam("sh", $vis);
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
@@ -135,7 +135,7 @@ function getPreviewInsightsPost($dbconn){
   }
   function getArticlePreview($dbconn){
     $vis = "show";
-    $stmt = $dbconn->prepare("SELECT * FROM blog WHERE visibility=:sh ORDER BY id DESC LIMIT 3" );
+    $stmt = $dbconn->prepare("SELECT * FROM blog WHERE visibility=:sh ORDER BY id DESC LIMIT 5" );
     $stmt->bindParam(":sh", $vis);
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){

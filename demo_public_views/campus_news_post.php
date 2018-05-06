@@ -49,6 +49,31 @@ include("include/header.php");
               </div>
             </div>
             <div class="fb-comments" data-mobile="true" data-href="http://boardspeck.com/news?id=<?php echo $_GET['id'] ?>" data-width="700px" data-numposts="10"></div>
+            <div class="header-content-o">
+            	<!--<a href="#" target="_blank"><img src="images/o1.jpg" alt="" /></a>-->
+            	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            	<!-- box ads -->
+            	<ins class="adsbygoogle"
+            	style="display:block"
+            	data-ad-client="ca-pub-8913707638008127"
+            	data-ad-slot="9737468736"
+            	data-ad-format="auto"></ins>
+            	<script>
+            	(adsbygoogle = window.adsbygoogle || []).push({});
+            	</script>
+            </div>	<div class="header-content-o">
+            		<!--<a href="#" target="_blank"><img src="images/o1.jpg" alt="" /></a>-->
+            		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            		<!-- box ads -->
+            		<ins class="adsbygoogle"
+            		style="display:block"
+            		data-ad-client="ca-pub-8913707638008127"
+            		data-ad-slot="9737468736"
+            		data-ad-format="auto"></ins>
+            		<script>
+            		(adsbygoogle = window.adsbygoogle || []).push({});
+            		</script>
+            	</div>
           </div>
           <!-- END .composs-panel -->
         </div>

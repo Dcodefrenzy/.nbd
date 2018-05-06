@@ -336,6 +336,9 @@ include APP_PATH."/demo_public_views/index.php";
   case "campus_news?id=$id&sh=$sh":
   include APP_PATH."/demo_public_views/campus_news_post.php";
   break;
+  case "campus_news?id=$id":
+  include APP_PATH."/demo_public_views/campus_news_post.php";
+  break;
 
   case "campus_news?c=$c&p=$p":
   include APP_PATH."/demo_public_views/campus_news_category.php";
