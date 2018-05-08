@@ -1,4 +1,5 @@
 <?php
+session_start();
 #Define App Path
 define("APP_PATH", dirname(dirname(__FILE__)));
 

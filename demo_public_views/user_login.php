@@ -1,6 +1,5 @@
 <?php
 ob_start();
-session_start();
   $error = [];
 if(array_key_exists('submit', $_POST)){
   if(empty($_POST['email'])){
@@ -137,8 +136,8 @@ Login
 <input class="btn btn-common log-btn" type="submit" name="submit" value="submit">
 </form>
 <ul class="form-links">
-<li class="pull-left"><a href="add_admin.php">Don't have an account?</a></li>
-<li class="pull-right"><a href="forgot-password.html">Lost your password?</a></li>
+<li class="pull-left"><a href="userRegistration">Don't have an account?</a></li>
+<li class="pull-right"><a href="#">Lost your password?</a></li>
 </ul>
 <br/>
 <a href="index.php">
