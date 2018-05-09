@@ -1,5 +1,6 @@
 <?php
 ob_start();
+session_start();
 // include("include/link_include.php");
 
 $error= [];

@@ -34,7 +34,7 @@ if(array_key_exists('submit', $_POST)){
   }
   if(empty($error)){
     $clean = array_map('trim', $_POST);
-    $ver['a'] = compressImage($_FILES,'upload',50, 'uploads/' );
+    $ver['a'] = compressImage($_FILES,'upload',90, 'uploads/' );
     addGrant($conn, $clean,ver,$hash_id);
   }
 }

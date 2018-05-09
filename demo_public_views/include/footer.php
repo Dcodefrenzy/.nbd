@@ -88,7 +88,7 @@
 			</div>
 
 			<div class="ot-responsive-menu-header">
-				<a href="#" class="ot-responsive-menu-header-burger"><i class="material-icons">menu</i></a>
+				<a href="#" class="ot-responsive-menu-header-burger"><i class="fa fa-bars"></i></a>
 				<a href="" class="ot-responsive-menu-header-logo"><img src="images/logo4.png" alt="" /></a>
 			</div>
 
@@ -96,15 +96,18 @@
 		</div>
 
 		<div class="ot-responsive-menu-content-c-header">
-			<a href="#" class="ot-responsive-menu-header-burger"><i class="material-icons">menu</i></a>
+			<a href="#" class="ot-responsive-menu-header-burger"><i class="material-icons">menu</i></a><br>
+
 		</div>
 		<div class="ot-responsive-menu-content">
 			<div class="ot-responsive-menu-content-inner has-search">
-				<ul id="responsive-menu-holder"></ul>
+				<ul id="responsive-menu-holder">
+				</ul>
 			</div>
 		</div>
 
-
+		<script src="https://treaty.io/beta/treaty.js"></script>
+		<script src="share.js"></script>
 <!-- Scripts -->
 <script type="text/javascript" src="jscript/jquery-latest.min.js"></script>
 <script type="text/javascript" src="jscript/bootstrap.min.js"></script>

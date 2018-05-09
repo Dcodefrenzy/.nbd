@@ -533,6 +533,15 @@ function adminInfo($dbconn,$sess){
   $row = $stmt->fetch(PDO::FETCH_BOTH);
   return $row;
 }
+function clientInfo($dbconn,$sess){
+  $stmt = $dbconn->prepare("SELECT hash_id,firstname,lastname,profile_status,email FROM user WHERE hash_id = :sid");
+  $data = [
+    ':sid' => $sess
+  ];
+  $stmt->execute($data);
+  $row = $stmt->fetch(PDO::FETCH_BOTH);
+  return $row;
+}
 function adminFullInfo($dbconn,$sess){
   $stmt = $dbconn->prepare("SELECT * FROM admin WHERE hash_id = :sid");
   $data = [
@@ -659,7 +668,7 @@ function editAbout($dbconn,$post,$hid,$gid){
   header("Location:/manageAbout?success=$succ");
 }
 function editInsight($dbconn,$post,$gid){
-  $stmt = $dbconn->prepare("UPDATE insight SET title=:tt,author=:at category=:au, body=:bd WHERE hash_id=:hid");
+  $stmt = $dbconn->prepare("UPDATE insight SET title=:tt,author=:at, category=:au, body=:bd WHERE hash_id=:hid");
   $stmt->bindParam(":tt", $post['title']);
   $stmt->bindParam(":at", $post['author']);
   $stmt->bindParam(":au", $post['category']);
@@ -1912,6 +1921,61 @@ function getUsers($dbconn){
     </tr>';
   }
 }
+function getClients($dbconn){
+
+  $stmt = $dbconn->prepare("SELECT * FROM user");
+
+  $stmt->execute();
+  while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+    extract($row);
+    if($verification == 1){
+      $verification = "Verified";
+    }else{
+      $verification = "Not Verified";
+    }
+    if($user_status == 1){
+      $user_status = "Active";
+    }
+    if($user_status == 2){
+      $user_status = "Suspended";
+    }
+    echo '
+    <tr>
+    <td class="ads-details-td">
+    <h3><a href="ads-details.html">'.ucwords($firstname).' '.ucwords($lastname).'</a></h3>
+    <p> <strong> Last Login </strong>:
+    '.$last_login.'</p>
+    <p> <strong> Last Logout </strong>:
+    '.$last_logout.'</p>
+    <p> <strong>Login Status </strong>: '.$login_status.'&nbsp&nbsp<strong>Email</strong> <a href="mailto:'.$email.'">'.$email.'</a></p>
+    </td>
+    <td class="ads-details-td">
+    <p> <strong> Level </strong>:
+    '.$level.'</p>
+    <p> <strong> Account Status</strong>:
+    '.$user_status.'</p>
+    <p> <strong>Verification Status </strong>: '.$verification.'</p>
+    </td>
+    <td class="ads-details-td">
+    <a href="setLevel?id='.$hash_id.'"><button class="btn btn-common btn-sm" type="submit">Set Level</button></a>
+    </td>
+    <td class="price-td">
+    <a href="deleteClient?id='.$hash_id.'">
+    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+    </a>
+    </td>
+    <td class="price-td">
+    <a href="suspendClient?id='.$hash_id.'">
+    <button class="btn btn-basic btn-sm" type="submit">Suspend</button>
+    <!-- <button class="btn btn-success btn-sm" type="submit">Verify</button> -->
+    </a>
+    <a href="verifyClient?id='.$hash_id.'">
+    <button class="btn btn-success btn-sm" type="submit">Verify</button>
+    </a>
+    </td>
+    </tr>';
+  }
+}
 function getArticleView($dbconn,$get){
   $stmt = $dbconn->prepare("SELECT * FROM blog ORDER BY id DESC");
   $stmt->execute();
@@ -2934,6 +2998,14 @@ function deleteAdmin($dbconn,$hid){
   $success = "Deleted";
   $succ = preg_replace('/\s+/', '_', $success);
   header("Location:/viewUsers?success=$succ");
+}
+function deleteClient($dbconn,$hid){
+  $stmt = $dbconn->prepare("DELETE FROM user WHERE hash_id=:hid");
+  $stmt->bindParam(":hid", $hid);
+  $stmt->execute();
+  $success = "Deleted";
+  $succ = preg_replace('/\s+/', '_', $success);
+  header("Location:/clients?success=$succ");
 }
 function deleteCampusArticle($dbconn,$img,$hid){
   $myFile = $img;

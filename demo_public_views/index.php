@@ -24,7 +24,7 @@ include ("include/header.php");
         <!-- BEGIN .composs-panel -->
         <div class="composs-panel">
           <div class="composs-panel-title">
-            <strong>News</strong>
+            <strong>Insights</strong>
           </div>
           <div class="composs-panel-inner">
             <div class="composs-blog-list lets-do-1">
@@ -32,7 +32,7 @@ include ("include/header.php");
             </div>
           </div>
           <div class="composs-panel-pager">
-            <a href="news" class="composs-pager-button">View more News</a>
+            <a href="insights" class="composs-pager-button">View more insights</a>
           </div>
           <!-- END .composs-panel -->
         </div>

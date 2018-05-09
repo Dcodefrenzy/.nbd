@@ -58,7 +58,7 @@ $lname = ucwords($lastname);
   </tr>
 <tbody>
 <tr>
-  <?php getUsers($conn); ?>
+  <?php getClients($conn); ?>
 
 <!-- </tr>
 <tr>

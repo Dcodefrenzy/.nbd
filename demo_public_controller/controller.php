@@ -1,4 +1,9 @@
 <?php
+
+
+
+
+
 // define("DB_PATH", dirname(dirname(__FILE__)));
 // include DB_PATH."/models/model.php";
 function decodeDate($date){
@@ -45,6 +50,16 @@ function decodeDate($date){
   $newDate = $month.' '.$day.', '.$year;
   return $newDate;
 }
+
+function userFullInfo($dbconn,$sess){
+  $stmt = $dbconn->prepare("SELECT * FROM user WHERE hash_id = :sid");
+  $data = [
+    ':sid' => $sess
+  ];
+  $stmt->execute($data);
+  $row = $stmt->fetch(PDO::FETCH_BOTH);
+  return $row;
+}
 // function previewBody($string, $count){
 //   $original_string = $string;
 //   $words = explode(' ', $original_string);
@@ -62,25 +77,33 @@ function getPostInfo($dbconn,$tb,$id){
   return $row;
 }
 function getPreviewInsightsPost($dbconn){
+  if(isset($_SESSION['user_id'])){
+    $userhash = $_SESSION['user_id'];
+    $sh = "&sh=$userhash";
+  }else{
+    $sh = "";
+    $userhash = "";
+  }
   $vis = "Show";
-  $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh ORDER BY id DESC LIMIT 7");
+  $stmt = $dbconn->prepare("SELECT * FROM insight WHERE visibility=:sh ORDER BY id DESC LIMIT 7");
   $stmt->bindParam("sh", $vis);
   $stmt->execute();
   $i = 0;
   while($row = $stmt->fetch(PDO::FETCH_BOTH)){
     extract($row);
     $bd = previewBody($body,30);
-    $NDate = decodeDate($date_created);
+    $NDate = decodeDate($date_created); $post = cleans($title);
+
     echo '<div class="item">
     <div class="item-header">
-    <a href="news?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img src="'.$image_1.'" alt="'.$headline.'" /></div></a>
+    <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img src="'.$image_1.'" alt="'.$title.'" /></div></a>
     </div>
     <div class="item-content">
-    <h2><a href="news?id='.$hash_id.'">'.$headline.'</a></h2>
+    <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$NDate.'</span>
     </span>
-    <p>'.$bd. '<a href="news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+    <p>'.$bd. '<a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
     </div>
     </div>';
     if (($i++ % 4) == 1 ){
@@ -98,20 +121,34 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPreviewInsight($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM insight WHERE visibility=:sh ORDER BY id DESC LIMIT 5" );
     $stmt->bindParam(":sh", $vis);
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $NDate = decodeDate($date_created);
+      $NDate = decodeDate($date_created); $post = cleans($title);
       echo '<div class="item">
-      <a href="insight?id='.$hash_id.'" class="main-slider-owl-title" style="font-size:18pt; text-shadow: 6px 6px 10px #000000;">'.$title.'</a>
-      <a href="insight?id='.$hash_id.'" class="main-slider-owl-calendar"><strong><i class="fa fa-clock-o"></i>'.$NDate.'</strong></a><div style="width:100%; max-height:80vh; overflow:hidden"><img src="'.$image_1.'" height="42" alt="" /></div>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="main-slider-owl-title" style="font-size:18pt; text-shadow: 6px 6px 10px #000000;">'.$title.'</a>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="main-slider-owl-calendar"><strong><i class="fa fa-clock-o"></i>'.$NDate.'</strong></a><div style="width:100%; max-height:80vh; overflow:hidden"><img src="'.$image_1.'" height="42" alt="'.$title.'" /></div>
       </div>';
     }
   }
   function getPreviewEvent($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $stmt = $dbconn->prepare("SELECT * FROM event ORDER BY start_date ASC LIMIT 5" );
     $stmt->bindParam("sh", $vis);
     $stmt->execute();
@@ -121,7 +158,7 @@ function getPreviewInsightsPost($dbconn){
       $EDate = decodeDate($end_date);
       echo '<div class="item">
       <div style="margin-left:10px" class="item-content">
-      <h4><a href="event?id='.$hash_id.'">'.$name.'</a> </h4><span>at '.$venue.'</span>';
+      <h4><a href="event?post='.$post.'&id='.$hash_id.$sh.'">'.$name.'</a> </h4><span>at '.$venue.'</span>';
       if($SDate == $EDate){
         echo '<p>'.$SDate.'</p>';
       }else{
@@ -134,20 +171,27 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getArticlePreview($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM blog WHERE visibility=:sh ORDER BY id DESC LIMIT 5" );
     $stmt->bindParam(":sh", $vis);
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       echo '  <div class="item">
       <div class="item-header">
-      <a href="articles?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-      <a href="articles?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
+      <a href="article?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+      <a href="article?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="articles?id='.$hash_id.'">'.$title.'</a></h4>
+      <h4><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -159,20 +203,27 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getCampusArticlePreview($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM campus_article WHERE visibility=:sh ORDER BY id DESC LIMIT 3" );
     $stmt->bindParam(":sh", $vis);
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       echo '  <div class="item">
       <div class="item-header">
-      <a href="articles?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-      <a href="articles?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
+      <a href="article?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+      <a href="article?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="articles?id='.$hash_id.'">'.$title.'</a></h4>
+      <h4><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -184,20 +235,27 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getCampusNewsPreview($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM campus_news WHERE visibility=:sh ORDER BY id DESC LIMIT 3" );
     $stmt->bindParam(":sh", $vis);
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       echo '  <div class="item">
       <div class="item-header">
-      <a href="campus_news?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-      <a href="campus_news?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
+      <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+      <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h4>
+      <h4><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -209,6 +267,13 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getGlobalNewsPreview($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $cat = "8a8ol2G34157b07l";
     $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh AND category=:cat ORDER BY id DESC LIMIT 3" );
@@ -217,14 +282,14 @@ function getPreviewInsightsPost($dbconn){
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       echo '  <div class="item">
       <div class="item-header">
-      <a href="news?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-      <a href="news?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
+      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -236,6 +301,13 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getAfricaNewsPreview($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $cat = "7398irnA16fc538a4";
     $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh AND category=:cat ORDER BY id DESC LIMIT 3" );
@@ -244,14 +316,14 @@ function getPreviewInsightsPost($dbconn){
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       echo '  <div class="item">
       <div class="item-header">
-      <a href="news?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-      <a href="news?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
+      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -263,6 +335,13 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getNigeriaNewsPreview($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $cat = "gia5235e9940N73ir";
     $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh AND category=:cat ORDER BY id DESC LIMIT 3" );
@@ -271,14 +350,14 @@ function getPreviewInsightsPost($dbconn){
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       echo '  <div class="item">
       <div class="item-header">
-      <a href="news?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-      <a href="news?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
+      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -290,20 +369,27 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getInsightPreview($dbconn){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM insight WHERE visibility=:sh  ORDER BY id DESC LIMIT 3" );
     $stmt->bindParam(":sh", $vis);
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       echo '  <div class="item">
       <div class="item-header">
-      <a href="insight?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-      <a href="insight?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="insight?id='.$hash_id.'">'.$title.'</a></h4>
+      <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -321,7 +407,7 @@ function getPreviewInsightsPost($dbconn){
     $stmt->execute();
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       echo '  <div class="item">
       <div style="margin-left:10px" class="item-content">
       <h4><a href="'.$link.'">'.$title.'</a></h4>
@@ -336,6 +422,13 @@ function getPreviewInsightsPost($dbconn){
     </span>';
   }
   function getPaginatedInsight($dbconn,$fs,$pp){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM insight WHERE visibility=:sh ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -344,20 +437,21 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
+      $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="insight?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="insight?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="insight?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
 
       </span>
-      <p>'.$bd.'<a  href="insight?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a  href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -382,6 +476,13 @@ function getPreviewInsightsPost($dbconn){
     return $nm;
   }
   function getPaginatedNews($dbconn,$fs,$pp){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -390,19 +491,19 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="news?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="news?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="news?id='.$hash_id.'">'.$headline.'</a></h2>
+      <h2><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'<a href="news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -420,6 +521,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPaginatedCampusNews($dbconn,$fs,$pp){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM campus_news WHERE visibility=:sh ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -428,19 +536,19 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="campus_news?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="campus_news?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img src="'.$image_1.'" alt="'.$headline.'" /></div></a>
+      <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h2>
+      <h2><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'<a href="campus_news?id='.$hash_id.'"  class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'"  class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -458,6 +566,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getCatPaginatedInsight($dbconn,$fs,$pp,$cat){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM insight WHERE visibility=:sh AND category=:cat ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -466,19 +581,19 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="insight?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="insight?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="insight?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'<a href="insight?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -496,6 +611,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getCatPaginatedNews($dbconn,$fs,$pp,$cat){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh AND category=:cat ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -504,19 +626,19 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="news?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="news?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="news?id='.$hash_id.'">'.$headline.'</a></h2>
+      <h2><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'<a href="news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -534,6 +656,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getCatPaginatedCampusNews($dbconn,$fs,$pp,$cat){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM campus_news WHERE visibility=:sh AND campus=:cat ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -542,19 +671,19 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="campus_news?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="campus_news?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
+      <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h2>
+      <h2><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'<a href="campus_news?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -572,29 +701,36 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPaginatedArticle($dbconn,$fs,$pp){
-    $sh = "show";
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
+    $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM blog WHERE visibility=:sh ORDER BY id DESC LIMIT $fs,$pp");
-    $stmt->bindParam(":sh", $sh);
+    $stmt->bindParam(":sh", $vis);
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="article?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="article?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      <a href="article?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="article?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="article?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
 
       </span>
-      <p>'.$bd.'<a href="article?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="article?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -612,27 +748,41 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPaginatedCampusArticle($dbconn,$fs,$pp){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $stmt = $dbconn->prepare("SELECT * FROM campus_article ORDER BY id DESC LIMIT $fs,$pp");
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+      if(isset($_SESSION['user_id'])){
+        $userhash = $_SESSION['user_id'];
+        $sh = "&sh=$userhash";
+      }else{
+        $sh = "";
+        $userhash = "";
+      }
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="campus_articles?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="campus_articles?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      <a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_articles?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
 
       </span>
-      <p>'.$bd.'<a href="campus_articles?id='.$hash_id.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -650,29 +800,36 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPaginatedExploits($dbconn,$fs,$pp){
-    $sh = "show";
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
+    $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM exploits WHERE visibility=:sh ORDER BY id DESC LIMIT $fs,$pp");
     // $stmt->bindParam(":ff", $fs);
-    $stmt->bindParam(":sh", $sh);
+    $stmt->bindParam(":sh", $vis);
     // $stmt->bindParam(":bk", $pp);
     $stmt->execute();
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="exploits?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="exploits?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      <a href="exploits?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="exploits?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="exploits?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="exploits?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
 
       </span>
-      <p>'.$bd.'<a href="exploits?id='.$hash_id.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="exploits?post='.$post.'&id='.$hash_id.$sh.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -690,6 +847,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getCatPaginatedCampusArticle($dbconn,$fs,$pp,$cat){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM campus_article WHERE visibility=:sh AND campus=:cat ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -699,20 +863,20 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="campus_articles?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="campus_articles?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      <a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_articles?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
 
       </span>
-      <p>'.$bd.'<a href="campus_articles?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -730,6 +894,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getCatPaginatedExploits($dbconn,$fs,$pp,$cat){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM exploits WHERE visibility=:sh AND campus=:cat ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":sh", $vis);
@@ -738,21 +909,28 @@ function getPreviewInsightsPost($dbconn){
     $stmt->execute();
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+      if(isset($_SESSION['user_id'])){
+        $userhash = $_SESSION['user_id'];
+        $sh = "&sh=$userhash";
+      }else{
+        $sh = "";
+        $userhash = "";
+      }
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
-      <a href="exploits?id='.$hash_id.'" class="img-read-later-button">Read</a>
-      <a href="exploits?id='.$hash_id.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
+      <a href="exploits?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button">Read</a>
+      <a href="exploits?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="exploits?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="exploits?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
 
       </span>
-      <p>'.$bd.'<a href="exploits?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="exploits?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -777,7 +955,7 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($headline);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-header">
@@ -814,7 +992,7 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
@@ -841,6 +1019,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPaginatedEvent($dbconn,$fs,$pp){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $stmt = $dbconn->prepare("SELECT * FROM event ORDER BY id DESC LIMIT $fs,$pp");
     // $stmt->bindParam(":ff", $fs);
     // $stmt->bindParam(":bk", $pp);
@@ -853,13 +1038,13 @@ function getPreviewInsightsPost($dbconn){
       $bd = previewBody($about,22);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
-      <h2><a href="event?id='.$hash_id.'">'.$name.'</a></h2>
+      <h2><a href="event?post='.$post.'&id='.$hash_id.$sh.'">'.$name.'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item">Start Date:<i class="fa fa-clock-o"></i>'.$SDate.'</span>
       <span class="item-meta-item">End Date:<i class="fa fa-clock-o"></i>'.$SDate.'</span>
       <span class="item-meta-item">Venue:<i class="fa-map-marker"></i>'.$venue.'</span>
       </span>
-      <p>'.$bd.'<a href="event?id='.$hash_id.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="event?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>';
       if (($i++ % 4) == 1 ){
@@ -877,6 +1062,13 @@ function getPreviewInsightsPost($dbconn){
     }
   }
   function getPaginatedGrant($dbconn,$fs,$pp){
+    if(isset($_SESSION['user_id'])){
+      $userhash = $_SESSION['user_id'];
+      $sh = "&sh=$userhash";
+    }else{
+      $sh = "";
+      $userhash = "";
+    }
     $vis = "show";
     $stmt = $dbconn->prepare("SELECT * FROM grants WHERE visibility=:vs ORDER BY id DESC LIMIT $fs,$pp");
     $stmt->bindParam(":vs", $vis);
@@ -886,17 +1078,17 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,22);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
-      <h2><a href="trainingDetails?id='.$hash_id.'">'.$title.'</a></h2>
+      <h2><a href="trainingDetails?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
       <span class="item-meta">
       </span>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
-      <p>'.$bd.'<a href="trainingDetails?id='.$hash_id.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
+      <p>'.$bd.'<a href="trainingDetails?post='.$post.'&id='.$hash_id.$sh.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
       </div>
       ';
@@ -949,7 +1141,7 @@ function getPreviewInsightsPost($dbconn){
     if($stmt->rowCount() > 0){
       while($row= $stmt->fetch(PDO::FETCH_BOTH)){
         extract($row);
-        $SDate = decodeDate($date_created);
+        $SDate = decodeDate($date_created); $post = cleans($title);
         echo '<div class="item">
         <div class="item-content" style="margin-left:0px">
         <h2><a href="'.$link.'">'.$title.'</a></h2>
@@ -990,7 +1182,7 @@ function getPreviewInsightsPost($dbconn){
       $i = 0;
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
-      $SDate = decodeDate($date_created);
+      $SDate = decodeDate($date_created); $post = cleans($title);
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
@@ -1077,20 +1269,27 @@ function setUserLogout($dbconn,$id){
   $stmt->execute();
 }
 function getInsightHeader($dbconn){
+  if(isset($_SESSION['user_id'])){
+    $userhash = $_SESSION['user_id'];
+    $sh = "&sh=$userhash";
+  }else{
+    $sh = "";
+    $userhash = "";
+  }
   $vis = "Show";
   $stmt = $dbconn->prepare("SELECT * FROM insight WHERE visibility=:sh ORDER BY id DESC LIMIT 2" );
   $stmt->bindParam(":sh", $vis);
   $stmt->execute();
   while($row = $stmt->fetch(PDO::FETCH_BOTH)){
     extract($row);
-    $SDate = decodeDate($date_created);
+    $SDate = decodeDate($date_created); $post = cleans($title);
     echo '<div class="item">
     <div class="item-header">
-    <a href="insight?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
+    <a href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
     <a href="#"><img src="'.$image_1.'" alt="'.$title.'" /></a>
     </div>
     <div class="item-content">
-    <h4><a href="insight?id='.$hash_id.'">'.$title.'</a></h4>
+    <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1102,20 +1301,27 @@ function getInsightHeader($dbconn){
   </span>';
 }
 function getCampusNewsHeader($dbconn){
+  if(isset($_SESSION['user_id'])){
+    $userhash = $_SESSION['user_id'];
+    $sh = "&sh=$userhash";
+  }else{
+    $sh = "";
+    $userhash = "";
+  }
   $vis = "show";
   $stmt = $dbconn->prepare("SELECT * FROM campus_news WHERE visibility=:sh ORDER BY id DESC LIMIT 2" );
   $stmt->bindParam(":sh", $vis);
   $stmt->execute();
   while($row = $stmt->fetch(PDO::FETCH_BOTH)){
     extract($row);
-    $SDate = decodeDate($date_created);
+    $SDate = decodeDate($date_created); $post = cleans($headline);
     echo '<div class="item">
     <div class="item-header">
-    <a href="campus_news?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
+    <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
     <a href="#"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
     </div>
     <div class="item-content">
-    <h4><a href="campus_news?id='.$hash_id.'">'.$headline.'</a></h4>
+    <h4><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1127,16 +1333,23 @@ function getCampusNewsHeader($dbconn){
   </span>';
 }
 function getReportHeader2($dbconn){
+  if(isset($_SESSION['user_id'])){
+    $userhash = $_SESSION['user_id'];
+    $sh = "&sh=$userhash";
+  }else{
+    $sh = "";
+    $userhash = "";
+  }
   $vis = "show";
   $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh ORDER BY id DESC LIMIT 2" );
   $stmt->bindParam(":sh", $vis);
   $stmt->execute();
   while($row = $stmt->fetch(PDO::FETCH_BOTH)){
     extract($row);
-    $SDate = decodeDate($date_created);
+    $SDate = decodeDate($date_created); $post = cleans($headline);
     echo '<div class="item">
     <div style="margin-left:10px" class="item-content">
-    <h4><a href="news?id='.$hash_id.'">'.$headline.'</a></h4>
+    <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1145,16 +1358,23 @@ function getReportHeader2($dbconn){
   }
 }
 function getInsightHeader2($dbconn){
+  if(isset($_SESSION['user_id'])){
+    $userhash = $_SESSION['user_id'];
+    $sh = "&sh=$userhash";
+  }else{
+    $sh = "";
+    $userhash = "";
+  }
   $vis = "Show";
   $stmt = $dbconn->prepare("SELECT * FROM insight WHERE visibility=:sh ORDER BY id DESC LIMIT 2" );
   $stmt->bindParam(":sh", $vis);
   $stmt->execute();
   while($row = $stmt->fetch(PDO::FETCH_BOTH)){
     extract($row);
-    $SDate = decodeDate($date_created);
+    $SDate = decodeDate($date_created); $post = cleans($title);
     echo '<div class="item">
     <div style="margin-left:10px" class="item-content">
-    <h4><a href="insight?id='.$hash_id.'">'.$title.'</a></h4>
+    <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1163,6 +1383,13 @@ function getInsightHeader2($dbconn){
   }
 }
 function getNewsHeader($dbconn,$rg){
+  if(isset($_SESSION['user_id'])){
+    $userhash = $_SESSION['user_id'];
+    $sh = "&sh=$userhash";
+  }else{
+    $sh = "";
+    $userhash = "";
+  }
   $vis = "show";
   $stmt = $dbconn->prepare("SELECT * FROM news WHERE visibility=:sh AND category=:rg ORDER BY id DESC LIMIT 2" );
   $stmt->bindParam(":sh", $vis);
@@ -1170,14 +1397,14 @@ function getNewsHeader($dbconn,$rg){
   $stmt->execute();
   while($row = $stmt->fetch(PDO::FETCH_BOTH)){
     extract($row);
-    $SDate = decodeDate($date_created);
+    $SDate = decodeDate($date_created); $post = cleans($headline);
     echo '<div class="item">
     <div class="item-header">
-    <a href="new?id='.$hash_id.'" class="img-read-later-button rm-btn-small">Read</a>
-    <a href="new?id='.$hash_id.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
+    <a href="news?post='.$post.'&id='.$hash_id.$sh.'" class="img-read-later-button rm-btn-small">Read</a>
+    <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
     </div>
     <div class="item-content">
-    <h4><a href="new?id='.$hash_id.'">'.$headline.'</a></h4>
+    <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>

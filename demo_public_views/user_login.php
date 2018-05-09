@@ -24,7 +24,7 @@ if(array_key_exists('submit', $_POST)){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="author" content="">
-<title>Witness Login</title>
+<title>Boardspeck Share Login</title>
 <link rel="shortcut icon" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="assets/css/jasny-bootstrap.min.css" type="text/css">
@@ -46,7 +46,7 @@ if(array_key_exists('submit', $_POST)){
 <div class="row">
 <div class="col-md-12">
 <div class="breadcrumb-wrapper">
-<h2 class="page-title">Login to your admin account</h2>
+<h2 class="page-title">Login to your account and start earning</h2>
 </div>
 </div>
 </div>
@@ -137,8 +137,8 @@ Login
 <input class="btn btn-common log-btn" type="submit" name="submit" value="submit">
 </form>
 <ul class="form-links">
-<li class="pull-left"><a href="add_admin.php">Don't have an account?</a></li>
-<li class="pull-right"><a href="forgot-password.html">Lost your password?</a></li>
+<li class="pull-left"><a href="userRegistration">Don't have an account?</a></li>
+<li class="pull-right"><a href="#">Lost your password?</a></li>
 </ul>
 <br/>
 <a href="index.php">

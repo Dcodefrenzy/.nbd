@@ -38,6 +38,16 @@ if(array_key_exists('submit', $_POST)){
   if(empty($error)){
     $clean = array_map('trim', $_POST);
     doUserRegister($conn, $clean);
+    $firstname = $clean['firstname'];
+    $lastname = $clean['lastname'];
+
+     $to = "boardspeck@gmail.com";
+     $subject = "Boardspeck Web Office Sharer Registration";
+     $txt = "Hello Admin, A new Admin($firstname $lastname)  has registered to the web office. Kindly check for Verification";
+     $headers = "From: info@boardspeck.com" . "\r\n" .
+     "CC: banjimayowa@gmail.com";
+
+     mail($to,$subject,$txt,$headers);
   }
 }
 
