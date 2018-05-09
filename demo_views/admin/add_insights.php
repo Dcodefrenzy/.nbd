@@ -38,7 +38,7 @@ if(array_key_exists('submit', $_POST)){
 
   if(empty($_POST['category'])){
     $error['category']="Enter a Category";
-  } 
+  }
   if(empty($_POST['author'])){
     $error['author']="Enter a Author";
   }
@@ -51,7 +51,7 @@ if(array_key_exists('submit', $_POST)){
   }
 
   if(empty($error)){
-    $ver['a'] = compressImage($_FILES,'upload',50, 'uploads/' );
+    $ver['a'] = compressImage($_FILES,'upload',90, 'uploads/' );
 
     $clean = array_map('trim', $_POST);
     addInsight($conn, $clean,$ver,$hash_id);

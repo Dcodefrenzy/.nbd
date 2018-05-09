@@ -56,7 +56,7 @@ if(array_key_exists('submit', $_POST)){
   }
 
   if(empty($error)){
-    $ver['a'] = compressImage($_FILES,'upload',50, 'uploads/' );
+    $ver['a'] = compressImage($_FILES,'upload',90, 'uploads/' );
 
     $clean = array_map('trim', $_POST);
     addCampusArticle($conn, $clean,$ver,$hash_id);

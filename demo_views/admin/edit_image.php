@@ -21,7 +21,7 @@ if(array_key_exists('submit', $_POST)){
     $error['upload'] = "Please choose file";
   }
   if(empty($error)){
-    $ver['a'] = compressImage($_FILES,'upload',50, 'uploads/' );
+    $ver['a'] = compressImage($_FILES,'upload',90, 'uploads/' );
     editImage($conn,$ver,$edit_info['image_1'],$_GET['id'],$_GET['t']);
   }
 }

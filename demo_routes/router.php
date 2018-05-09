@@ -161,9 +161,15 @@ switch ($uri[1]) {
   case "suspend?id=$id":
   include APP_PATH."/demo_views/admin/suspend.php";
   break;
+  case "suspendClient?id=$id":
+  include APP_PATH."/demo_views/admin/suspend_client.php";
+  break;
 
   case "verify?id=$id":
   include APP_PATH."/demo_views/admin/verify.php";
+  break;
+  case "verifyClient?id=$id":
+  include APP_PATH."/demo_views/admin/verify_client.php";
   break;
 
   case "setLevel?id=$id":
@@ -172,6 +178,9 @@ switch ($uri[1]) {
 
   case "deleteUser?id=$id":
   include APP_PATH."/demo_views/admin/delete_user.php";
+  break;
+  case "deleteClient?id=$id":
+  include APP_PATH."/demo_views/admin/delete_client.php";
   break;
 
   case "addFaq":
@@ -416,6 +425,8 @@ switch ($uri[1]) {
   include APP_PATH."/demo_views/admin/manage_about.php";
   break;
   case "clients":
+  include APP_PATH."/demo_views/admin/users.php";
+  case "clients?success=$success":
   include APP_PATH."/demo_views/admin/users.php";
   break;
   case "manageAbout?success=$success":

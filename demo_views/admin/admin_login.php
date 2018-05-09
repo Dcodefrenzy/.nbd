@@ -1,6 +1,6 @@
 <?php
 ob_start();
-
+session_start();
 
   $error = [];
 if(array_key_exists('submit', $_POST)){

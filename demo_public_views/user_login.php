@@ -1,5 +1,6 @@
 <?php
 ob_start();
+session_start();
   $error = [];
 if(array_key_exists('submit', $_POST)){
   if(empty($_POST['email'])){
@@ -23,7 +24,7 @@ if(array_key_exists('submit', $_POST)){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="author" content="">
-<title>Witness Login</title>
+<title>Boardspeck Share Login</title>
 <link rel="shortcut icon" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="assets/css/jasny-bootstrap.min.css" type="text/css">
@@ -45,7 +46,7 @@ if(array_key_exists('submit', $_POST)){
 <div class="row">
 <div class="col-md-12">
 <div class="breadcrumb-wrapper">
-<h2 class="page-title">Login to your admin account</h2>
+<h2 class="page-title">Login to your account and start earning</h2>
 </div>
 </div>
 </div>

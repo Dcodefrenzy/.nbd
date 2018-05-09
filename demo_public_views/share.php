@@ -24,7 +24,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) &&
 */
 $_SESSION['LAST_ACTIVITY'] = $time;
 $page_title = "Home - BoardSpeck";
-$page_name = "home";
+$page_name = "share";
 include ("include/header.php");
 if(isset($_SESSION['user_id'])){
 $user = userFullInfo($conn, $_SESSION['user_id']);
@@ -44,10 +44,21 @@ $user = userFullInfo($conn, $_SESSION['user_id']);
         <!-- BEGIN .composs-panel -->
         <div class="composs-panel">
           <div class="composs-panel-title">
-            <strong>Acoount Detail</strong>
+            <strong>Account Details</strong>
           </div>
           <div class="composs-panel-inner">
             <div class="composs-blog-list lets-do-1">
+
+
+<?php if($user['user_status']== 2){
+?>
+<h4>This Account has been suspended for suspicious activities on our page. You are advised to stop sharing with this account as you can never earn from Boardspeck post sharing</h4>
+<p>If you think this is a misunderstanding, Please contact the Boardspeck Web Office from the Contact Us Section of this website</p>
+
+<?php }else{ ?>
+
+
+
               Name: <?php echo $user['firstname'] .' '.$user['lastname']; ?><br>
               Verification Status: <?php if($user['verification'] == 1){
                 echo "Verified";
@@ -55,7 +66,10 @@ $user = userFullInfo($conn, $_SESSION['user_id']);
                 echo "Not Verified";
               } ?><br>
               Points: <?php echo $user['points']?><br>
-              Total Amount Earned: #<?php echo $user['points']?><br>
+              Total Amount Earned: <?php echo $user['points']?> Naira<br>
+
+
+            <?php } ?>
             </div>
           </div>
 
