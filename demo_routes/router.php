@@ -84,6 +84,10 @@ switch ($uri[1]) {
   case "addInsight":
   include APP_PATH."/demo_views/admin/add_insights.php";
   break;
+  
+  case "contents":
+  include APP_PATH."/demo_views/admin/content.php";
+  break;
 
   case "addReport":
   include APP_PATH."/demo_views/admin/add_report.php";

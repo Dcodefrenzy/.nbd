@@ -5,11 +5,6 @@ include("include/authentication.php");
 include("include/link_include.php");
 include("include/level1_limit.php");
 $level = adminLevel($conn, $_SESSION['id']);
-// if($level <= 1){
-//   $success = "You only Have Access to that page yet";
-//   $succ = preg_replace('/\s+/', '_', $success);
-//   header("Location: adminHome?wn=$succ");
-// }
 
 authenticate();
 if(isset($_SESSION['id'])){
@@ -68,7 +63,7 @@ if(array_key_exists('submit', $_POST)){
   <label class="control-label" for="textarea">About Event</label>
   <?php $display = displayErrors($error, 'about');
   echo $display ?>
-  <textarea class="form-control"  id="editor" name="about" placeholder="Write about the Event here" rows="4"></textarea>
+  <textarea class="form-control"  id="editor1" name="about" placeholder="Write about the Event here" rows="4"></textarea>
   </div>
 
 <input class="btn btn-common" type="submit" name="submit" value="Submit">
@@ -84,7 +79,7 @@ if(array_key_exists('submit', $_POST)){
 
 <a class="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
 
-<script>
+<!-- <script>
   ClassicEditor
     .create( document.querySelector( '#editor' ) )
     .then( editor => {
@@ -93,6 +88,26 @@ if(array_key_exists('submit', $_POST)){
     .catch( error => {
       console.error( error );
     } );
+</script> -->
+<script type="text/javascript">
+ CKEDITOR.replace( 'editor1',
+ {
+		toolbarGroups :
+		[
+      	{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+        	{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+          { name: 'links' },
+            { name: 'insert' },
+              	{ name: 'others' },
+            	{ name: 'forms' },
+            { name: 'tools' },
+            '/',
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+            { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+            { name: 'styles' },
+            { name: 'colors' },
+		]
+	});
 </script>
 <script src="assets/js/jquery-min.js" type="text/javascript">
   </script>

@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+
 header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
 header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0");
@@ -13,6 +14,9 @@ header("Expires: 0");
 	<!-- Meta Tags -->
 	<!-- <link rel="manifest" href="manifest.json"> -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- <meta name="viewport" content="width=device-width"> -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<link rel="icon" sizes="192x192" href="images/fav.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="treaty-io-verification" content="182a000390585450a1d145d0a57305ac443420ff976681246574eda5c564b1f7">
@@ -68,7 +72,7 @@ header("Expires: 0");
 			<meta property="og:description" content="'.$rf.'" />';
 			echo '<meta name="twitter:card" content="summary_large_image">
 			<meta name="twitter:site" content="@boardspeck">
-			<meta name="twitter:title" content="BoardSpeck - '.$title.'">
+			<meta name="twitter:title" content="BoardSpeck - '.strtoupper($title).' by '.$author.' ">
 			<meta name="twitter:description" content="'.$rf.'">
 			<meta name="twitter:image" content="https://boardspeck.com/'.$image_1.'">
 			<meta name="twitter:image:width" content="280">
@@ -119,7 +123,7 @@ header("Expires: 0");
 			echo '<meta property="og:title" content="Would you love to attend? - '.$name.' ('.$SDate.')" />
 			<meta property="og:description" content="'.$rf.'" />
 			<meta property="og:type" content="article" />
-			<meta property="og:image" content="https://boardspeck.com/images/fav.png" />';
+			<meta property="og:image" content="https://boardspeck.com/images/attend-event.jpg" />';
 			echo '<meta name="twitter:card" content="summary_large_image">
 			<meta name="twitter:site" content="@boardspeck">
 			<meta name="twitter:title" content="Would you love to attend? - '.$name.' ('.$SDate.')">
@@ -173,7 +177,7 @@ header("Expires: 0");
 		}elseif($page_name == "insight_post"){
 			$bd = previewBody($body, 22);
 			$rf = strip_tags($bd);
-			echo '<meta property="og:title" content="BoardSpeck - '.strtoupper($title).' by '.$author.'" />
+			echo '<meta property="og:title" content="BoardSpeck - '.strtoupper($title).'  by '.$author.' " />
 			<meta property="og:image" content="https://boardspeck.com/'.$image_1.'" />
 			<meta property="og:image:width" content="450"/>
 			<meta property="og:image:height" content="298"/>
@@ -181,7 +185,7 @@ header("Expires: 0");
 			<meta property="og:description" content="'.$rf.'" />';
 			echo '<meta name="twitter:card" content="summary_large_image">
 			<meta name="twitter:site" content="@boardspeck">
-			<meta name="twitter:title" content="BoardSpeck - '.$title.'">
+			<meta name="twitter:title" content="BoardSpeck - '.strtoupper($title).' by '.$author.'">
 			<meta name="twitter:description" content="'.$rf.'">
 			<meta name="twitter:image" content="https://boardspeck.com/'.$image_1.'">
 			<meta name="twitter:image:width" content="280">
@@ -223,14 +227,25 @@ header("Expires: 0");
 		}elseif($page_name == "event_show"){
 			$bd = previewBody($about, 22);
 			$rf = strip_tags($bd);
+			if($_GET['id'] == "7n410v8t03152ee"){
+				echo '<meta property="og:title" content="Would you love to attend? - '.$name.' ('.$SDate.')" />
+				<meta property="og:description" content="'.$rf.'" />
+				<meta property="og:type" content="article" />
+				<meta property="og:image" content="http://demotheme.mckodev.com.ng/IMG-20180511-WA0009.jpg" />';
+				echo '<meta name="twitter:card" content="summary_large_image">
+				<meta name="twitter:site" content="@boardspeck">
+				<meta name="twitter:title" content="Would you love to attend? - '.$name.' ('.$SDate.')">
+				<meta name="twitter:description" content="'.$rf.'">';
+			}else{
 			echo '<meta property="og:title" content="Would you love to attend? - '.$name.' ('.$SDate.')" />
 			<meta property="og:description" content="'.$rf.'" />
 			<meta property="og:type" content="article" />
-			<meta property="og:image" content="https://boardspeck.com/images/fav.png" />';
+			<meta property="og:image" content="https://boardspeck.com/images/attend-event.jpg" />';
 			echo '<meta name="twitter:card" content="summary_large_image">
 			<meta name="twitter:site" content="@boardspeck">
 			<meta name="twitter:title" content="Would you love to attend? - '.$name.' ('.$SDate.')">
 			<meta name="twitter:description" content="'.$rf.'">';
+		}
 		}elseif($page_name == "view_training"){
 			$bd = previewBody($body, 22);
 			$rf = strip_tags($bd);
@@ -403,7 +418,7 @@ header("Expires: 0");
 		</li>
 	</ul>
 </li>
-<li><a href="#"><span>News</span></a>
+<li><a href="news"><span>News</span></a>
 	<ul class="sub-menu">
 		<?php fetchNewsLink($conn,'news') ?>
 		<!-- <li><a href="global">Global</a></li>
@@ -453,9 +468,8 @@ header("Expires: 0");
 <?php if($page_name == "exploits" || $page_name == "campus_articles"){ ?>
 	<marquee>Are you a university student? Will you like to post your articles on BoardSpeck? Please message us from the Contact Us section of this website. Good to have you around.</marquee>
 <?php } ?>
-<?php if($page_name == "news_post" || $page_name == "view_training" || $page_name == "share" || $page_name == "view_event"){ ?>
 	<div class="wrapper">
-		<div class="header-content-o">
+		<div>
 			<!--<a href="#" target="_blank"><img src="images/o1.jpg" alt="" /></a>-->
 			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 			<!-- box ads -->
@@ -469,5 +483,5 @@ header("Expires: 0");
 			</script>
 		</div>
 	</div>
-<?php } ?>
+
 </div>

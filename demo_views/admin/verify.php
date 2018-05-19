@@ -6,7 +6,7 @@ include("include/level1_limit.php");
 include("include/level2_limit.php");
 $userinfo = adminInfo($conn,$_GET['id']);
 
-$stmt = $conn->prepare("UPDATE admin SET verification=:vs,user_status=:us WHERE hash_id=:gid");
+$stmt = $conn->prepare("UPDATE admin SET verification=:vs,user_status=:us,defaulted=NULL WHERE hash_id=:gid");
 $ver = 1;
 $status = 1;
 $stmt->bindParam(":gid",$_GET['id']);

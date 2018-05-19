@@ -1,9 +1,4 @@
 <?php
-
-
-
-
-
 // define("DB_PATH", dirname(dirname(__FILE__)));
 // include DB_PATH."/models/model.php";
 function decodeDate($date){
@@ -50,7 +45,6 @@ function decodeDate($date){
   $newDate = $month.' '.$day.', '.$year;
   return $newDate;
 }
-
 function userFullInfo($dbconn,$sess){
   $stmt = $dbconn->prepare("SELECT * FROM user WHERE hash_id = :sid");
   $data = [
@@ -93,13 +87,12 @@ function getPreviewInsightsPost($dbconn){
     extract($row);
     $bd = previewBody($body,30);
     $NDate = decodeDate($date_created); $post = cleans($title);
-
     echo '<div class="item">
     <div class="item-header">
     <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img src="'.$image_1.'" alt="'.$title.'" /></div></a>
     </div>
     <div class="item-content">
-    <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+    <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$NDate.'</span>
     </span>
@@ -155,10 +148,10 @@ function getPreviewInsightsPost($dbconn){
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($start_date);
-      $EDate = decodeDate($end_date);
+      $EDate = decodeDate($end_date); $post = cleans($name);
       echo '<div class="item">
       <div style="margin-left:10px" class="item-content">
-      <h4><a href="event?post='.$post.'&id='.$hash_id.$sh.'">'.$name.'</a> </h4><span>at '.$venue.'</span>';
+      <h4><a href="event?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($name).'</a> </h4><span>at '.$venue.'</span>';
       if($SDate == $EDate){
         echo '<p>'.$SDate.'</p>';
       }else{
@@ -191,7 +184,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="article?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
+      <h4><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -223,7 +216,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="article?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
+      <h4><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -255,7 +248,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
+      <h4><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -289,7 +282,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
+      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -323,7 +316,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
+      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -357,7 +350,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
+      <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -389,7 +382,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$title.'" /></a>
       </div>
       <div class="item-content">
-      <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
+      <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -410,7 +403,7 @@ function getPreviewInsightsPost($dbconn){
       $SDate = decodeDate($date_created); $post = cleans($title);
       echo '  <div class="item">
       <div style="margin-left:10px" class="item-content">
-      <h4><a href="'.$link.'">'.$title.'</a></h4>
+      <h4><a href="'.$link.'">'.strtoupper($title).'</a></h4>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -446,10 +439,9 @@ function getPreviewInsightsPost($dbconn){
       <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
-
       </span>
       <p>'.$bd.'<a  href="insight?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
@@ -499,7 +491,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
+      <h2><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -544,7 +536,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
+      <h2><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -589,7 +581,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="insight?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -634,7 +626,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
+      <h2><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -679,7 +671,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h2>
+      <h2><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -725,10 +717,9 @@ function getPreviewInsightsPost($dbconn){
       <a href="article?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="article?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
-
       </span>
       <p>'.$bd.'<a href="article?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
@@ -777,10 +768,9 @@ function getPreviewInsightsPost($dbconn){
       <a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
-
       </span>
       <p>'.$bd.'<a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
@@ -824,10 +814,9 @@ function getPreviewInsightsPost($dbconn){
       <a href="exploits?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="exploits?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="exploits?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
-
       </span>
       <p>'.$bd.'<a href="exploits?post='.$post.'&id='.$hash_id.$sh.'"class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
@@ -871,10 +860,9 @@ function getPreviewInsightsPost($dbconn){
       <a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
-
       </span>
       <p>'.$bd.'<a href="campus_articles?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
@@ -925,10 +913,9 @@ function getPreviewInsightsPost($dbconn){
       <a href="exploits?post='.$post.'&id='.$hash_id.$sh.'"><div style="width:200px; height:150px; overflow:hidden"><img   src="'.$image_1.'" alt="'.$title.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="exploits?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="exploits?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
-
       </span>
       <p>'.$bd.'<a href="exploits?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
@@ -963,7 +950,7 @@ function getPreviewInsightsPost($dbconn){
       <a href="'.$link.'"><div style="width:200px; height:150px; overflow:hidden"><img src="'.$image_1.'" alt="'.$headline.'" /></div></a>
       </div>
       <div class="item-content">
-      <h2><a href="'.$link.'">'.$headline.'</a></h2>
+      <h2><a href="'.$link.'">'.strtoupper($headline).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -996,7 +983,7 @@ function getPreviewInsightsPost($dbconn){
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
-      <h2><a href="'.$link.'">'.$title.'</a></h2>
+      <h2><a href="'.$link.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
       </span>
@@ -1034,15 +1021,15 @@ function getPreviewInsightsPost($dbconn){
     while($row = $stmt->fetch(PDO::FETCH_BOTH)){
       extract($row);
       $SDate = decodeDate($start_date);
-      $EDate = decodeDate($end_date);
+      $EDate = decodeDate($end_date);  $post = cleans($name);
       $bd = previewBody($about,22);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
-      <h2><a href="event?post='.$post.'&id='.$hash_id.$sh.'">'.$name.'</a></h2>
+      <h2><a href="event?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($name).'</a></h2>
       <span class="item-meta">
       <span class="item-meta-item">Start Date:<i class="fa fa-clock-o"></i>'.$SDate.'</span>
       <span class="item-meta-item">End Date:<i class="fa fa-clock-o"></i>'.$SDate.'</span>
-      <span class="item-meta-item">Venue:<i class="fa-map-marker"></i>'.$venue.'</span>
+      <span class="item-meta-item">Venue:<i class="fa fa-map-marker"></i>'.$venue.'</span>
       </span>
       <p>'.$bd.'<a href="event?post='.$post.'&id='.$hash_id.$sh.'" class="item-meta-item meta-button">Read More<i class="fa fa-caret-right"></i></a></p>
       </div>
@@ -1082,7 +1069,7 @@ function getPreviewInsightsPost($dbconn){
       $bd = previewBody($body,22);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
-      <h2><a href="trainingDetails?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h2>
+      <h2><a href="trainingDetails?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       </span>
       <span class="item-meta">
@@ -1144,7 +1131,7 @@ function getPreviewInsightsPost($dbconn){
         $SDate = decodeDate($date_created); $post = cleans($title);
         echo '<div class="item">
         <div class="item-content" style="margin-left:0px">
-        <h2><a href="'.$link.'">'.$title.'</a></h2>
+        <h2><a href="'.$link.'">'.strtoupper($title).'</a></h2>
         <span class="item-meta">
         <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
         </span>
@@ -1186,7 +1173,7 @@ function getPreviewInsightsPost($dbconn){
       $bd = previewBody($body,33);
       echo '<div class="item">
       <div class="item-content" style="margin-left:0px">
-      <h2><a href="'.$link.'">'.$title.'</a></h2>
+      <h2><a href="'.$link.'">'.strtoupper($title).'</a></h2>
       <span class="item-meta">
       <a href="'.$link.'" class="item-meta-item meta-button">Visit Page<i class="fa fa-caret-right"></i></a>
       </span>
@@ -1199,16 +1186,17 @@ function getPreviewInsightsPost($dbconn){
   }
   function doUserRegister($dbconn, $input){
     $rnd = rand(0000000000,9999999999);
-    $split = $_POST['firstname'];
+    $split = $input['firstname'];
     $id = $rnd.$split;
     $hash_id = str_shuffle($id);
     $hash = password_hash($input['pword'], PASSWORD_BCRYPT);
     #insert data
-    $stmt = $dbconn->prepare("INSERT INTO user(firstname,lastname,email,hash,hash_id,time_created,date_created) VALUES(:fn, :ln, :e, :h,:hid,NOW(),NOW())");
+    $stmt = $dbconn->prepare("INSERT INTO user(firstname,lastname,email,phone_number,hash,hash_id,time_created,date_created) VALUES(:fn, :ln,:pn, :e, :h,:hid,NOW(),NOW())");
     #bind params...
     $data = [ ':fn' => $input['firstname'],
     ':ln' => $input['lastname'],
     ':e' => $input['email'],
+    ':e' => $input['phonenumber'],
     ':h' => $hash,
     ':hid' => $hash_id
   ];
@@ -1249,7 +1237,7 @@ function userLogin($dbconn, $input){
       if(isset($_GET['rd'])){
         header("Location:".$_GET['rd']);
       }else{
-        header("Location:index");
+        header("Location:share");
       }
     }
   }
@@ -1289,7 +1277,7 @@ function getInsightHeader($dbconn){
     <a href="#"><img src="'.$image_1.'" alt="'.$title.'" /></a>
     </div>
     <div class="item-content">
-    <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
+    <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1321,7 +1309,7 @@ function getCampusNewsHeader($dbconn){
     <a href="#"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
     </div>
     <div class="item-content">
-    <h4><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
+    <h4><a href="campus_news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1349,7 +1337,7 @@ function getReportHeader2($dbconn){
     $SDate = decodeDate($date_created); $post = cleans($headline);
     echo '<div class="item">
     <div style="margin-left:10px" class="item-content">
-    <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
+    <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1374,7 +1362,7 @@ function getInsightHeader2($dbconn){
     $SDate = decodeDate($date_created); $post = cleans($title);
     echo '<div class="item">
     <div style="margin-left:10px" class="item-content">
-    <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.$title.'</a></h4>
+    <h4><a href="insight?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($title).'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>
@@ -1404,7 +1392,7 @@ function getNewsHeader($dbconn,$rg){
     <a href="news?post='.$post.'&id='.$hash_id.$sh.'"><img src="'.$image_1.'" alt="'.$headline.'" /></a>
     </div>
     <div class="item-content">
-    <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.$headline.'</a></h4>
+    <h4><a href="news?post='.$post.'&id='.$hash_id.$sh.'">'.strtoupper($headline).'</a></h4>
     <span class="item-meta">
     <span class="item-meta-item"><i class="fa fa-clock-o"></i>'.$SDate.'</span>
     </span>

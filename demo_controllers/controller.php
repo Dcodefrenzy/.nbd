@@ -66,19 +66,41 @@ function decodeHashId($dbconn,$table,$hash_id){
   return $row['id'];
 }
 function doAdminRegister($dbconn, $input){
+  try{
   $rnd = rand(0000000000,9999999999);
-  $hash_id = 'admin'.$rnd;
+    $split = $input['firstname'];
+    $id = $rnd.$split;
+  $hash_id = str_shuffle($id);
+
   $hash = password_hash($input['pword'], PASSWORD_BCRYPT);
   #insert data
-  $stmt = $dbconn->prepare("INSERT INTO admin(firstname,lastname,email,hash,hash_id,time_created,date_created) VALUES(:fn, :ln, :e, :h,:hid,NOW(),NOW())");
+  $stmt = $dbconn->prepare("INSERT INTO admin(firstname,lastname,phone_number,email,hash,hash_id,time_created,date_created) VALUES(:fn, :ln,:pn, :e, :h,:hid,NOW(),NOW())");
   #bind params...
   $data = [ ':fn' => $input['firstname'],
   ':ln' => $input['lastname'],
   ':e' => $input['email'],
+  ':pn' => $input['phonenumber'],
   ':h' => $hash,
   ':hid' => $hash_id
 ];
 $stmt->execute($data);
+
+
+$stmt2 = $dbconn->prepare("INSERT INTO user(firstname,lastname,phone_number,email,hash,hash_id,time_created,date_created) VALUES(:fn, :ln,:pn, :e, :h,:hid,NOW(),NOW())");
+#bind params...
+$data = [ ':fn' => $input['firstname'],
+':ln' => $input['lastname'],
+':e' => $input['email'],
+':pn' => $input['phonenumber'],
+':h' => $hash,
+':hid' => $hash_id
+];
+$stmt2->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
 $suc = 'Registration Successful';
 $message = preg_replace('/\s+/', '_', $suc);
 header("Location:adminRegistration?success=$message");
@@ -115,6 +137,21 @@ function adminLogin($dbconn, $input){
     }
   }
 }
+
+function workRate($dbconn,$id){
+  $usr = useFullInfo($dbconn,$id);
+
+  if($usr['rate'] < 3){
+      $rate = 0.10;
+    $user = $dbconn->prepare("UPDATE user SET rate=rate+:ptt WHERE hash_id=:hid");
+    $bind = [
+    ":hid"=>$id,
+    ":ptt"=>$rate
+    ];
+    $user->execute($bind);
+  }
+}
+
 function compressImage($files, $name, $quality, $upDIR ) {
   $rnd = rand(0000000, 9999999);
   $strip_name = str_replace(" ", "_", $_FILES[$name]['name']);
@@ -131,6 +168,7 @@ function compressImage($files, $name, $quality, $upDIR ) {
   return $destination_url;
 }
 function addFrontage($dbconn,$post,$destination,$sess){
+  try{
   $stmt = $dbconn->prepare("INSERT INTO frontage VALUES(NULL, :ht,:txt,:img,NOW(),NOW(),:sess)");
   $data = [
     ':ht' => $post['header_title'],
@@ -139,6 +177,11 @@ function addFrontage($dbconn,$post,$destination,$sess){
     ':sess' => $sess
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   $success = "Frontage Info Added";
   $succ = preg_replace('/\s+/', '_', $success);
   header("Location:/manageViews?success=$succ");
@@ -153,6 +196,8 @@ function cleans($string){
   return strtolower(trim($string, '-'));
 }
 function addArticle($dbconn,$post,$destn, $sess){
+
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -168,12 +213,19 @@ function addArticle($dbconn,$post,$destn, $sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['title'],'article',$sess);
   $success = "Article Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+   workRate($dbconn,$sess);
   header("Location:/manageArticles?success=$succ");
 }
 function addCampusArticle($dbconn,$post,$destn, $sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -190,12 +242,20 @@ function addCampusArticle($dbconn,$post,$destn, $sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['title'],'article',$sess);
   $success = "Campus Article Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+   workRate($dbconn,$sess);
   header("Location:/manageCampusArticles?success=$succ");
+
 }
 function addExploit($dbconn,$post,$destn, $sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -212,12 +272,19 @@ function addExploit($dbconn,$post,$destn, $sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['title'],'article',$sess);
   $success = "Exploit Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/manageExploits?success=$succ");
 }
 function addInsight($dbconn,$post,$destn, $sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -234,17 +301,25 @@ function addInsight($dbconn,$post,$destn, $sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['title'],'insight',$sess);
   $success = "Insight Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+   workRate($dbconn,$sess);
   header("Location:/manageInsights?success=$succ");
 }
 function addNews($dbconn,$post,$destn, $sess){
+try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
   $hash_id = str_shuffle($id.'news');
   $stmt = $dbconn->prepare("INSERT INTO news VALUES(NULL, :tt,:lnk,:vis,:cat,:bd,:img1,:sess,NOW(),NOW(),:hsh)");
+
   $data = [
     ':tt' => $post['title'],
     ':lnk' => $post['link'],
@@ -256,12 +331,21 @@ function addNews($dbconn,$post,$destn, $sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
+
   logs($dbconn, 'added', $post['title'],'news',$sess);
   $success = "News Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/manageNews?success=$succ");
 }
 function addCampusNews($dbconn,$post,$destn, $sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -278,9 +362,15 @@ function addCampusNews($dbconn,$post,$destn, $sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['title'],'news',$sess);
   $success = "Campus News Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+workRate($dbconn,$sess);
   header("Location:/manageCampusNews?success=$succ");
 }
 function addReport($dbconn,$post,$sess){
@@ -301,6 +391,7 @@ function addReport($dbconn,$post,$sess){
   logs($dbconn, 'added', $post['title'],'report',$sess);
   $success = "Report Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/manageReports?success=$succ");
 }
 function addAbout($dbconn,$post,$sess){
@@ -312,9 +403,11 @@ function addAbout($dbconn,$post,$sess){
   $stmt->execute($data);
   $success = "About Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/manageAbout?success=$succ");
 }
 function addEvent($dbconn,$post,$sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -330,12 +423,19 @@ function addEvent($dbconn,$post,$sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['name'],'event',$sess);
   $success = "Event Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/manageEvent?success=$succ");
 }
 function addGrant($dbconn,$post,$destn,$sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -351,12 +451,19 @@ function addGrant($dbconn,$post,$destn,$sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['title'],'grant',$sess);
   $success = "Grant Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/manageTrainings?success=$succ");
 }
 function addTraining($dbconn,$post,$sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = explode(" ",$post['title']);
   $id = $rnd.cleans($split['0']);
@@ -371,9 +478,15 @@ function addTraining($dbconn,$post,$sess){
     ':hsh' => $hash_id
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['title'],'training',$sess);
   $success = "Training Post Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/managePrograms?success=$succ");
 }
 function addProject($dbconn,$post,$destn, $sess){
@@ -389,6 +502,7 @@ function addProject($dbconn,$post,$destn, $sess){
   logs($dbconn, 'added', $post['title'],'project',$sess);
   $success = "Project Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/addProject?success=$succ");
 }
 function addFaq($dbconn,$post, $sess){
@@ -402,9 +516,22 @@ function addFaq($dbconn,$post, $sess){
   logs($dbconn, 'added', $post['question'],'faq',$sess);
   $success = "Project Uploaded";
   $succ = preg_replace('/\s+/', '_', $success);
+  workRate($dbconn,$sess);
   header("Location:/addFaq?success=$succ");
 }
+
+function useFullInfo($dbconn,$sess){
+  $stmt = $dbconn->prepare("SELECT * FROM user WHERE hash_id = :sid");
+  $data = [
+    ':sid' => $sess
+  ];
+  $stmt->execute($data);
+  $row = $stmt->fetch(PDO::FETCH_BOTH);
+  return $row;
+}
+
 function addPackageName($dbconn,$post, $sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = $_POST['package_name'];
   $id = $rnd.$split;
@@ -416,6 +543,11 @@ function addPackageName($dbconn,$post, $sess){
     ':sess' => $sess,
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['package_name'],'package',$sess);
   $package_name = $post['package_name'];
   $success = "Insight Name $package_name Added";
@@ -423,6 +555,7 @@ function addPackageName($dbconn,$post, $sess){
   header("Location:/insightCategory?success=$succ");
 }
 function addNewsCategory($dbconn,$post, $sess){
+  try{
   $rnd = rand(0000000000,9999999999);
   $split = $_POST['package_name'];
   $id = $rnd.$split;
@@ -434,6 +567,11 @@ function addNewsCategory($dbconn,$post, $sess){
     ':sess' => $sess,
   ];
   $stmt->execute($data);
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'added', $post['package_name'],'news category',$sess);
   $package_name = $post['package_name'];
   $success = "News Category $package_name Added";
@@ -668,6 +806,7 @@ function editAbout($dbconn,$post,$hid,$gid){
   header("Location:/manageAbout?success=$succ");
 }
 function editInsight($dbconn,$post,$gid){
+  try{
   $stmt = $dbconn->prepare("UPDATE insight SET title=:tt,author=:at, category=:au, body=:bd WHERE hash_id=:hid");
   $stmt->bindParam(":tt", $post['title']);
   $stmt->bindParam(":at", $post['author']);
@@ -675,6 +814,11 @@ function editInsight($dbconn,$post,$gid){
   $stmt->bindParam(":bd", $post['body']);
   $stmt->bindParam(":hid", $gid);
   $stmt->execute();
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   if(isset($_SESSION['id'])){
     $sess = $_SESSION['id'];
   }
@@ -697,12 +841,18 @@ function setLevel($dbconn,$post,$gid){
   header("Location:/viewUsers?success=$succ");
 }
 function editContent($dbconn,$post,$gid,$tb){
+  try{
   $stmt = $dbconn->prepare("UPDATE $tb SET title=:tt, link=:au, body=:bd WHERE hash_id=:hid");
   $stmt->bindParam(":tt", $post['title']);
   $stmt->bindParam(":au", $post['link']);
   $stmt->bindParam(":bd", $post['body']);
   $stmt->bindParam(":hid", $gid);
   $stmt->execute();
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   if(isset($_SESSION['id'])){
     $sess = $_SESSION['id'];
   }
@@ -720,6 +870,7 @@ function editContent($dbconn,$post,$gid,$tb){
   }
 }
 function editNews($dbconn,$post,$gid){
+  try{
   $stmt = $dbconn->prepare("UPDATE news SET headline=:tt,category=:ct, link=:au, body=:bd WHERE hash_id=:hid");
   $stmt->bindParam(":tt", $post['title']);
   $stmt->bindParam(":au", $post['link']);
@@ -730,6 +881,11 @@ function editNews($dbconn,$post,$gid){
   if(isset($_SESSION['id'])){
     $sess = $_SESSION['id'];
   }
+}
+catch(PDOException $e){
+  die("Something Went Wrong");
+
+}
   logs($dbconn, 'edited', $post['title'],'news',$sess);
   $success = "edited Successfully";
   $succ = preg_replace('/\s+/', '_', $success);
@@ -1837,7 +1993,7 @@ function getAdmin($dbconn){
     '.$last_login.'</p>
     <p> <strong> Last Logout </strong>:
     '.$last_logout.'</p>
-    <p> <strong>Login Status </strong>: '.$login_status.'&nbsp&nbsp<strong>Email</strong> <a href="mailto:'.$email.'">'.$email.'</a></p>
+    <p> <strong>Login Status </strong>: '.$login_status.'&nbsp&nbsp<strong>Email</strong> <a target="_blank" href="mailto:'.$email.'">'.$email.'</a></p>
     </td>
     <td class="ads-details-td">
     <p> <strong> Level </strong>:
@@ -1892,7 +2048,8 @@ function getUsers($dbconn){
     '.$last_login.'</p>
     <p> <strong> Last Logout </strong>:
     '.$last_logout.'</p>
-    <p> <strong>Login Status </strong>: '.$login_status.'&nbsp&nbsp<strong>Email</strong> <a href="mailto:'.$email.'">'.$email.'</a></p>
+    <p> <strong>Login Status </strong>: '.$login_status.'&nbsp&nbsp<strong>Email</strong> <a target=_blank href="mailto:'.$email.'">'.$email.'</a></p>
+
     </td>
     <td class="ads-details-td">
     <p> <strong> Level </strong>:
@@ -1948,6 +2105,7 @@ function getClients($dbconn){
     <p> <strong> Last Logout </strong>:
     '.$last_logout.'</p>
     <p> <strong>Login Status </strong>: '.$login_status.'&nbsp&nbsp<strong>Email</strong> <a href="mailto:'.$email.'">'.$email.'</a></p>
+        <p> <strong>Points</strong>: '.$points.'</p>
     </td>
     <td class="ads-details-td">
     <p> <strong> Level </strong>:

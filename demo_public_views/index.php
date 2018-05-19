@@ -3,17 +3,17 @@ $page_title = "Home - BoardSpeck";
 $page_name = "home";
 include ("include/header.php");
 ?>
-<!-- BEGIN .main-slider -->
-<div class="main-slider">
-  <!-- BEGIN .wrapper -->
+
+<!-- <div class="main-slider">
+
   <div class="wrapper">
     <div class="main-slider-owl">
-      <?php getPreviewInsight($conn) ?>
+      <?php //getPreviewInsight($conn) ?>
     </div>
-    <!-- END .wrapper -->
+
   </div>
-  <!-- BEGIN .main-slider -->
-</div>
+
+</div> -->
 <!-- BEGIN .content -->
 <div class="content">
   <!-- BEGIN .wrapper -->
@@ -39,7 +39,7 @@ include ("include/header.php");
         <!-- END .composs-main-content -->
       </div>
       <!-- BEGIN #sidebar -->
-      <?php include 'include/insight_aside.php' ?>
+      <?php include 'include/nigeria_aside.php' ?>
     </div>
     <!-- END .wrapper -->
   </div>

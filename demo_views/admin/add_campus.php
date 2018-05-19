@@ -49,6 +49,16 @@ if(array_key_exists('commit', $_POST)){
 
   if(empty($error)){
     $clean = array_map('trim', $_POST);
+    $firstn = $fname;
+    $lastn = $lname;
+    $uri = explode("/", $_SERVER['REQUEST_URI']);
+    $url = $uri[1];
+     $to = "boardspeck@gmail.com";
+     $subject = "Boardspeck Web Office Content Upload";
+     $txt = "Hello Admin, ($firstn $lastn)has added a content on "."$url"." page at the back office. Kindly check for and approval";
+     $headers = "From: info@boardspeck.com" . "\r\n" .
+     "CC: banjimayowa@gmail.com";
+     mail($to,$subject,$txt,$headers);
     addPackage($conn,$clean,$hash_id);
   }
 }
