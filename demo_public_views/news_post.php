@@ -47,7 +47,7 @@ include("include/header.php");
 
                  <div class="composs-main-article-head">
                    <div class="composs-main-article-media" >
-                     <img src="<?php echo $image_1 ?>" alt="<?php echo $title ?>" style="min-width:100%" />
+                     <img src="<?php echo $image_1 ?>" alt="<?php echo $headline ?>" style="min-width:100%" />
                    </div>
                    <div class="composs-main-article-meta">
                      <span class="item"><i class="fa fa-clock-o"></i><?php echo $SDate ?></span>

@@ -18,8 +18,16 @@ if($read['defaulted'] >= 3){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="author" content="GrayGrids Team">
-  <title>BoardSpeck</title>
-  <script type="text/javascript" src="assets/ckeditor5-build-classic/ckeditor.js"></script>
+  <title><?php
+  if(isset($page_title)){
+    echo $page_title;
+  }else{
+  ?>
+  BoardSpeck
+<?php } ?>
+</title>
+  <!-- <script type="text/javascript" src="/assets/ckeditor5-build-classic/ckeditor.js"></script> -->
+  <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
   <link rel="shortcut icon" href="assets/img/favicon.png">
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="assets/css/jasny-bootstrap.min.css" type="text/css">
@@ -35,6 +43,20 @@ if($read['defaulted'] >= 3){
   <link rel="stylesheet" href="assets/css/responsive.css" type="text/css">
   <link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
   <link href="assets/css/fileinput.css" rel="stylesheet">
+  <link rel="manifest" href="/manifest.json" />
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+  var OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "89dfd893-f2f1-401c-a666-5189937829da",
+      autoRegister: false,
+      notifyButton: {
+        enable: true,
+      },
+    });
+  });
+</script>
 </head>
 <body>
   <div class="header">
@@ -76,14 +98,17 @@ if($read['defaulted'] >= 3){
           <!-- <li><a href="addProfile">Add Profile</a></li> -->
           <!-- <li><a href="manageReports">Manage Reports</a></li> -->
           <!-- <li><a href="manageGrants">Manage Programs</a></li> -->
+          <li><a href="contents">Contents</a></li>
           <li><a href="managePrograms">Manage Program</a></li>
           <li><a href="manageCampusNews">Manage Campus News</a></li>
           <li><a href="manageCampusArticles">Manage Campus Articles</a></li>
           <li><a href="manageNews">Manage News</a></li>
           <li><a href="manageInsights">Manage Article</a></li>
           <li><a href="manageEvent">Manage Events</a></li>
+
           <li> <a href="logout">Logout</a></li>
         <?php }elseif($level == 4){ ?>
+
           <li><a href="addCampusNews">Add Campus News</a></li>
           <li><a href="addCampusArticle">Add Campus Article</a></li>
           <li><a href="manageCampusNews">Manage Campus News</a></li>
@@ -116,6 +141,7 @@ if($read['defaulted'] >= 3){
            <li> <a href="logout">Logout</a></li>
         <?php }else{ ?>
           <li><a href="admin">Home</a></li>
+          <li><a href="contents">Contents</a></li>
           <li><a href="addArticle">Add Article</a></li>
           <li><a href="addNews">Add News</a></li>
           <li><a href="addCampusNews">Add Campus News</a></li>
@@ -144,6 +170,7 @@ if($read['defaulted'] >= 3){
             <li><a href="addAbout">Add About Us</a></li>
             <li><a href="manageAbout">About Us</a></li>
             <li><a href="viewUsers">Manage Users</a></li>
+            <li><a href="clients">Clients Users</a></li>
             <li><a href="log">Log</a></li>
           <?php } ?>
           <li> <a href="logout">Logout</a></li>

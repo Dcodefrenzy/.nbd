@@ -54,6 +54,16 @@ if(array_key_exists('submit', $_POST)){
     $ver['a'] = compressImage($_FILES,'upload',90, 'uploads/' );
 
     $clean = array_map('trim', $_POST);
+    $firstn = $fname;
+    $lastn = $lname;
+    $uri = explode("/", $_SERVER['REQUEST_URI']);
+    $url = $uri[1];
+     $to = "boardspeck@gmail.com";
+     $subject = "Boardspeck Web Office Content Upload";
+     $txt = "Hello Admin, ($firstn $lastn)has added a content on "."$url"." page at the back office. Kindly check for and approval";
+     $headers = "From: info@boardspeck.com" . "\r\n" .
+     "CC: banjimayowa@gmail.com";
+     mail($to,$subject,$txt,$headers);
     addInsight($conn, $clean,$ver,$hash_id);
   }
 }
@@ -101,7 +111,7 @@ echo $display ?> <input class="form-control input-md" name="author" placeholder=
 <label class="control-label" for="textarea">BODY</label>
 <?php $display = displayErrors($error, 'body');
 echo $display ?>
-<textarea class="form-control" id="editor" name="body" placeholder="Write your insight here" rows="4"></textarea>
+<textarea class="form-control" id="editor1" name="body" placeholder="Write your insight here" rows="4"></textarea>
 </div>
 
   <br/>
@@ -163,7 +173,7 @@ echo $display ?>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
 
 
-<script>
+<!-- <script>
   ClassicEditor
     .create( document.querySelector( '#editor' ) )
     .then( editor => {
@@ -172,6 +182,26 @@ echo $display ?>
     .catch( error => {
       console.error( error );
     } );
+</script> -->
+<script type="text/javascript">
+ CKEDITOR.replace( 'editor1',
+ {
+		toolbarGroups :
+		[
+      	{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+        	{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+          { name: 'links' },
+            { name: 'insert' },
+              	{ name: 'others' },
+            	{ name: 'forms' },
+            { name: 'tools' },
+            '/',
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+            { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+            { name: 'styles' },
+            { name: 'colors' },
+		]
+	});
 </script>
 <script src="assets/js/jquery-min.js" type="text/javascript">
   </script>

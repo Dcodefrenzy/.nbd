@@ -19,6 +19,9 @@ if(array_key_exists('submit', $_POST)){
   if(empty($_POST['email'])){
     $error['email']="Enter a email";
   }
+  if(empty($_POST['phonenumber'])){
+    $error['phonenumber']="Enter a phonenumber";
+  }
 
   if(doesUserEmailExist($conn,$_POST['email'])){
     $error['email'] = "*Email already exists on our system, Please enter another email";
@@ -103,6 +106,14 @@ Register
 <div class="input-icon">
 <i class="icon fa fa-envelope"></i>
 <input type="text" id="sender-email" class="form-control" name="email" placeholder="Email Address">
+</div>
+</div>
+<div class="form-group">
+  <?php $display = displayErrors($error, 'phonenumber');
+  echo $display ?>
+<div class="input-icon">
+<i class="icon fa fa-envelope"></i>
+<input type="text" id="sender-email" class="form-control" name="phonenumber" placeholder="Phone Number">
 </div>
 </div>
 <div class="form-group">

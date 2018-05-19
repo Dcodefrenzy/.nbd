@@ -31,16 +31,16 @@ include("include/header.php");
                   <div class="column4">
                     <ul>
                       <?php if($SDate == $EDate){ ?>
-                          <li>Date:&nbsp<i class="material-icons">access_time</i><?php echo $SDate ?></li>
+                          <li>Date<i class="fa fa-clock-o"></i>:&nbsp<?php echo $SDate ?></li>
                         <?php }else{ ?>
-                      <li>Start Date:&nbsp<i class="material-icons">access_time</i><?php echo $SDate ?></li>
-                      <li>End Date:&nbsp<i class="material-icons">access_time</i><?php echo $EDate ?></li>
+                      <li>Start Date<i class="fa fa-clock-o"></i>:&nbsp<?php echo $SDate ?></li>
+                      <li>End Date<i class="fa fa-clock-o"></i>:&nbsp<?php echo $EDate ?></li>
                     <?php } ?>
-                      <li>Venue:&nbsp<i class="material-icons">location_on</i><?php echo $venue ?></li>
+                      <li>Venue<i class="fa fa-map-marker"></i>:&nbsp<?php echo $venue ?></li>
                     </ul>
                   </div>
                   <div class="column4">
-                    <i class="material-icons large-icon">location_city</i>
+                    <i class="fa fa-building large-icon"></i>
                     <!-- <i class="material-icons large-icon">location_on</i> -->
                   </div>
                 </div>

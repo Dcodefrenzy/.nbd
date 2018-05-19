@@ -43,9 +43,6 @@ if(array_key_exists("submit", $_POST)){
 
  												<div class="column4">
  													<ul>
- 														<li><i class="fa fa-phone"></i> <a href="callto:08168785591">+2348168785591</a> </li>
- 														<li><i class="fa fa-whatsapp"></i>
- 														  <a href="intent://send/+2348168785591#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end">Send Whatsapp</a></li>
  														<li><a href="mailto:boardspeck@gmail.com"><i class="fa fa-envelope"></i>boardspeck@gmail.com</a></li>
  													</ul>
  												</div>

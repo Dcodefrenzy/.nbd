@@ -1,28 +1,12 @@
 <?php
-$time = $_SERVER['REQUEST_TIME'];
 
-/**
-* for a 30 minute timeout, specified in seconds
-*/
-$timeout_duration = 1800;
-
-/**
-* Here we look for the user's LAST_ACTIVITY timestamp. If
-* it's set and indicates our $timeout_duration has passed,
-* blow away any previous $_SESSION data and start a new one.
-*/
-if (isset($_SESSION['LAST_ACTIVITY']) &&
-   ($time - $_SESSION['LAST_ACTIVITY']) > $timeout_duration) {
-    session_unset();
-    session_destroy();
-    session_start();
-}
-
-/**
-* Finally, update LAST_ACTIVITY so that our timeout
-* is based on it and not the user's login time.
-*/
-$_SESSION['LAST_ACTIVITY'] = $time;
+// session_start();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// $lifetime=30000;
+//  session_start();
+//  setcookie(session_name(),session_id(),time()+$lifetime);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // die(ini_get("session.gc_maxlifetime"));
 $page_title = "Home - BoardSpeck";
 $page_name = "share";
 include ("include/header.php");
@@ -32,6 +16,7 @@ $user = userFullInfo($conn, $_SESSION['user_id']);
   header("Location:index");
 }
 ?>
+<input type="hidden" name="" value="">
 <!-- BEGIN .main-slider -->
 
 <!-- BEGIN .content -->
@@ -48,8 +33,6 @@ $user = userFullInfo($conn, $_SESSION['user_id']);
           </div>
           <div class="composs-panel-inner">
             <div class="composs-blog-list lets-do-1">
-
-
 <?php if($user['user_status']== 2){
 ?>
 <h4>This Account has been suspended for suspicious activities on our page. You are advised to stop sharing with this account as you can never earn from Boardspeck post sharing</h4>
@@ -65,11 +48,20 @@ $user = userFullInfo($conn, $_SESSION['user_id']);
               }else{
                 echo "Not Verified";
               } ?><br>
-              Points: <?php echo $user['points']?><br>
-              Total Amount Earned: <?php echo $user['points']?> Naira<br>
+              Point Per Visit: <?php echo $user['rate']?><br>
+              Points Earn: <?php echo $user['points']?><br>
+              Total Amount Earned: NGN <?php echo $user['points']?><br>
 
 
             <?php } ?>
+            </div>
+            <div class="well">
+              <h3>Important Information</h3>
+              <li>Ensure that you are logged in all the time...</li>
+              <li>If you read posts on this website...you will earn your points</li>
+              <li>If you share the posts to your social media accounts, you will earn a point if people visits with your link.One per person</li>
+              <li>Your points will be paid at the minimum of 1000 points...1000points = NGN1000 </li>
+              If you have any enquiry to make please contact 08168785581 (Whatsapp Enabled)
             </div>
           </div>
 

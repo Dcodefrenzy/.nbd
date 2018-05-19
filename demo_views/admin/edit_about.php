@@ -58,7 +58,7 @@ if(array_key_exists('submit', $_POST)){
               <label class="control-label" for="textarea">About Event</label>
               <?php $display = displayErrors($error, 'about');
               echo $display ?>
-              <textarea class="form-control"  id="editor" name="about" value="<?php echo $edit_info['about'] ?>" placeholder="Write about the Event here" rows="4"></textarea>
+              <textarea class="form-control"  id="editor1" name="about" value="<?php echo $edit_info['about'] ?>" placeholder="Write about the Event here" rows="4"><?php echo $edit_info['about'] ?></textarea>
             </div>
             <input class="btn btn-common" type="submit" name="submit" value="Edit">
           </form>
@@ -70,8 +70,8 @@ if(array_key_exists('submit', $_POST)){
 <a class="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
 <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
-<script>
-var content = <?php echo "`".$edit_info['about']."`" ?>;
+<!-- <script>
+
 ClassicEditor
 .create( document.querySelector( '#editor' ) )
 .then( editor => {
@@ -81,6 +81,38 @@ ClassicEditor
 .catch( error => {
   console.error( error );
 } );
+</script> -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
+<!-- <script>
+  ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( editor => {
+      console.log( editor );
+    } )
+    .catch( error => {
+      console.error( error );
+    } );
+</script> -->
+<script type="text/javascript">
+ CKEDITOR.replace( 'editor1',
+ {
+		toolbarGroups :
+		[
+      	{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+        	{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+          { name: 'links' },
+            { name: 'insert' },
+              	{ name: 'others' },
+            	{ name: 'forms' },
+            { name: 'tools' },
+            '/',
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+            { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+            { name: 'styles' },
+            { name: 'colors' },
+		]
+	});
 </script>
 <script src="assets/js/jquery-min.js" type="text/javascript">
 </script>
